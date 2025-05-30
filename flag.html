@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Flag Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe, #f0f4f8); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+            transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+        }
+
+        body.dark {
+            background: linear-gradient(135deg, #1a202c, #2d3748); 
+            color: #e2e8f0;
+        }
+
+        
+        .glass-card {
+            background-color: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            border-radius: 1rem;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .dark .glass-card {
+            background-color: rgba(0, 0, 0, 0.2); 
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        
+        .gradient-button {
+            background-size: 200% auto;
+            transition: all 0.3s ease-in-out;
+            border-radius: 0.75rem; 
+            padding: 0.75rem 1.5rem; 
+            font-weight: 600;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gradient-button:hover {
+            background-position: right center; 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .gradient-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.5); 
+        }
+
+        
+        #classic-mode { background-image: linear-gradient(to right, #6366f1, #8b5cf6, #a855f7); } 
+        #timed-mode { background-image: linear-gradient(to right, #f59e0b, #fbbf24, #fcd34d); } 
+        #learn-mode { background-image: linear-gradient(to right, #10b981, #059669, #047857); } 
+        #high-scores { background-image: linear-gradient(to right, #a855f7, #c084fc, #d8b4fe); } 
+        
+        #play-again { background-image: linear-gradient(to right, #f59e0b, #fbbf24); } 
+        #back-to-menu {
+            background-image: linear-gradient(to right, #94a3b8, #64748b); 
+            color: #e2e8f0; 
+        }
+        .dark #back-to-menu {
+            background-image: linear-gradient(to right, #475569, #334155);
+        }
+
+        
+        .glowing-border-correct {
+            border: 2px solid #34d399; 
+            box-shadow: 0 0 15px 3px rgba(52, 211, 153, 0.7);
+        }
+        .glowing-border-wrong {
+            border: 2px solid #ef4444; 
+            box-shadow: 0 0 15px 3px rgba(239, 68, 68, 0.7);
+        }
+
+        .streak-glow {
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.9); 
+            animation: pulse 1.5s infinite; 
+        }
+
+        
+        .flag-display-area {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05); 
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1); 
+        }
+        .dark .flag-display-area {
+            background: rgba(0, 0, 0, 0.1);
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+        }
+
+        #flag-image {
+            max-width: 100%;
+            height: 160px; 
+            object-fit: contain;
+            border-radius: 0.75rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15); 
+            transition: all 0.3s ease-in-out;
+        }
+        .dark #flag-image {
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+        }
+
+        
+        .answer-btn.correct {
+            background: linear-gradient(to right, #34d399, #10b981); 
+            color: white;
+            box-shadow: 0 4px 15px rgba(52, 211, 153, 0.5);
+            border: 2px solid #34d399;
+        }
+        .answer-btn.wrong {
+            background: linear-gradient(to right, #ef4444, #dc2626); 
+            color: white;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.5);
+            border: 2px solid #ef4444;
+        }
+
+        
+        .transition-all {
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 300ms;
+        }
+
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #6366f1; 
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        .dark .spinner {
+            border-color: rgba(255, 255, 255, 0.2);
+            border-left-color: #a855f7; 
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900 min-h-screen transition-all">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <header class="flex justify-between items-center mb-8">
+            <a href="#" id="home-link" class="no-underline">
+                <h1 class="text-3xl font-extrabold font-poppins text-indigo-700 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors">
+                    🌍 World Flag Quiz
+                </h1>
+            </a>
+            <button id="theme-toggle" class="p-3 rounded-full bg-gray-200 dark:bg-gray-700 shadow-md transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <i class="fas fa-moon text-gray-700 dark:hidden"></i>
+                <i class="fas fa-sun text-yellow-400 hidden dark:inline"></i>
+            </button>
+        </header>
+
+        <div id="mode-selection" class="text-center mb-8 glass-card p-6 md:p-8">
+            <h2 class="text-3xl font-bold font-poppins mb-6 text-gray-800 dark:text-gray-100">Select Game Mode</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <button id="classic-mode" class="gradient-button py-4 px-6 shadow-lg">
+                    <i class="fas fa-flag mr-3 text-2xl"></i> Classic Mode
+                    <p class="text-sm mt-1 opacity-90 font-inter">Answer 10 flag questions</p>
+                </button>
+                <button id="timed-mode" class="gradient-button py-4 px-6 shadow-lg">
+                    <i class="fas fa-stopwatch mr-3 text-2xl"></i> Timed Mode
+                    <p class="text-sm mt-1 opacity-90 font-inter">60 seconds to answer as many as you can</p>
+                </button>
+                <button id="learn-mode" class="gradient-button py-4 px-6 shadow-lg">
+                    <i class="fas fa-graduation-cap mr-3 text-2xl"></i> Learn Mode
+                    <p class="text-sm mt-1 opacity-90 font-inter">Get detailed info after each answer</p>
+                </button>
+                <button id="high-scores" class="gradient-button py-4 px-6 shadow-lg">
+                    <i class="fas fa-trophy mr-3 text-2xl"></i> High Scores
+                    <p class="text-sm mt-1 opacity-90 font-inter">View your best performances</p>
+                </button>
+            </div>
+        </div>
+
+        <div id="game-screen" class="hidden">
+            <div class="flex flex-wrap justify-center md:justify-between items-center mb-6 gap-4">
+                <div class="glass-card p-3 rounded-lg shadow-md flex items-center space-x-2 min-w-[120px] justify-center">
+                    <span class="text-sm text-gray-600 dark:text-gray-300 font-medium">Question</span>
+                    <div class="text-xl font-bold font-poppins"><span id="question-number">1</span>/<span id="total-questions">10</span></div>
+                </div>
+                <div class="glass-card p-3 rounded-lg shadow-md flex items-center space-x-2 min-w-[120px] justify-center">
+                    <span class="text-sm text-gray-600 dark:text-gray-300 font-medium">Score</span>
+                    <div class="text-xl font-bold font-poppins"><span id="score">0</span></div>
+                </div>
+                <div id="streak-container" class="hidden glass-card p-3 rounded-lg shadow-md flex items-center space-x-2 min-w-[120px] justify-center">
+                    <span class="text-sm text-gray-600 dark:text-gray-300 font-medium">Streak</span>
+                    <div class="text-xl font-bold streak-glow font-poppins"><span id="streak">0</span><i class="fas fa-fire ml-1 text-amber-500"></i></div>
+                </div>
+                <div id="timer-container" class="hidden glass-card p-3 rounded-lg shadow-md flex items-center space-x-2 min-w-[120px] justify-center">
+                    <span class="text-sm text-gray-600 dark:text-gray-300 font-medium">Time Left</span>
+                    <div class="text-xl font-bold font-poppins"><span id="timer">60</span>s</div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-xl p-6 mb-8 shadow-lg flag-display-area">
+                <div class="flex justify-center mb-6">
+                    <div class="w-full max-w-md h-48 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center flag-shadow overflow-hidden">
+                        <img id="flag-image" src="" alt="Country Flag" class="h-full object-contain">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button class="answer-btn gradient-button from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 py-4 px-6 text-left font-inter"></button>
+                    <button class="answer-btn gradient-button from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 py-4 px-6 text-left font-inter"></button>
+                    <button class="answer-btn gradient-button from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 py-4 px-6 text-left font-inter"></button>
+                    <button class="answer-btn gradient-button from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 py-4 px-6 text-left font-inter"></button>
+                </div>
+            </div>
+
+            <div id="learn-info" class="hidden mt-8 glass-card rounded-xl p-6 shadow-lg">
+                <h3 class="text-xl font-semibold font-poppins mb-4 text-indigo-600 dark:text-indigo-400">About <span id="correct-country"></span></h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-200 font-inter">
+                    <div>
+                        <p class="font-medium">Capital:</p>
+                        <p id="country-capital" class="mb-3"></p>
+                        <p class="font-medium">Continent:</p>
+                        <p id="country-continent" class="mb-3"></p>
+                    </div>
+                    <div>
+                        <p class="font-medium">Population:</p>
+                        <p id="country-population" class="mb-3"></p>
+                        <p id="country-fact" class="italic"></p>
+                    </div>
+                </div>
+                <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                    <button id="explain-flag-btn" class="gradient-button from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 py-3 px-6 shadow-md w-full">
+                        ✨ Explain Flag Symbolism
+                    </button>
+                    <div id="symbolism-loading-spinner" class="hidden flex justify-center items-center mt-4">
+                        <div class="spinner"></div>
+                        <span class="ml-2 text-gray-600 dark:text-gray-300">Generating explanation...</span>
+                    </div>
+                    <div id="flag-symbolism-output" class="mt-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg text-sm text-left shadow-inner hidden">
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="results-screen" class="hidden text-center">
+            <div class="glass-card rounded-xl p-8 shadow-lg max-w-md mx-auto">
+                <h2 class="text-3xl font-bold font-poppins mb-6 text-indigo-600 dark:text-indigo-400">Quiz Complete!</h2>
+
+                <div class="mb-6">
+                    <div class="text-6xl font-extrabold font-poppins mb-2 text-indigo-700 dark:text-indigo-300"><span id="final-score">0</span></div>
+                    <p class="text-gray-500 dark:text-gray-400 font-inter">Total Score</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 mb-6 text-gray-700 dark:text-gray-200 font-inter">
+                    <div class="glass-card p-3 rounded-lg">
+                        <div class="text-xl font-bold font-poppins"><span id="correct-answers">0</span></div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Correct</p>
+                    </div>
+                    <div class="glass-card p-3 rounded-lg">
+                        <div class="text-xl font-bold font-poppins"><span id="wrong-answers">0</span></div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Wrong</p>
+                    </div>
+                    <div class="glass-card p-3 rounded-lg">
+                        <div class="text-xl font-bold font-poppins"><span id="accuracy">0</span>%</div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Accuracy</p>
+                    </div>
+                    <div class="glass-card p-3 rounded-lg">
+                        <div class="text-xl font-bold font-poppins"><span id="max-streak">0</span></div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Max Streak</p>
+                    </div>
+                </div>
+
+                <button id="play-again" class="gradient-button py-3 px-6 shadow-md w-full">
+                    Play Again <i class="fas fa-redo ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="high-scores-screen" class="hidden">
+            <div class="glass-card rounded-xl p-6 shadow-lg max-w-md mx-auto">
+                <h2 class="text-3xl font-bold font-poppins mb-6 text-center text-indigo-600 dark:text-indigo-400">High Scores</h2>
+
+                <div class="mb-4 text-gray-700 dark:text-gray-200 font-inter">
+                    <div class="flex justify-between mb-3 border-b pb-2 border-gray-300 dark:border-gray-600">
+                        <span class="font-bold text-lg">Mode</span>
+                        <span class="font-bold text-lg">Score</span>
+                    </div>
+                    <div id="high-scores-list" class="space-y-3">
+                        <div class="flex justify-between items-center py-2 px-3 rounded-md bg-gray-50 dark:bg-gray-800">
+                            <span>Classic Mode</span>
+                            <span class="font-semibold text-indigo-600 dark:text-indigo-300">100</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 px-3 rounded-md bg-gray-50 dark:bg-gray-800">
+                            <span>Timed Mode</span>
+                            <span class="font-semibold text-amber-600 dark:text-amber-300">85</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="back-to-menu" class="gradient-button py-3 px-6 shadow w-full">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to Menu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="correct-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3"></audio>
+    <audio id="wrong-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3"></audio>
+    <audio id="streak-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
+    <audio id="time-up-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3"></audio>
+
+    <script>
+        const countries = [
+            {
+                name: "United States",
+                flag: "https://flagcdn.com/w320/us.png",
+                capital: "Washington, D.C.",
+                continent: "North America",
+                population: "331 million",
+                fact: "The US has the world's largest economy and is home to the most billionaires."
+            },
+            {
+                name: "Canada",
+                flag: "https://flagcdn.com/w320/ca.png",
+                capital: "Ottawa",
+                continent: "North America",
+                population: "38 million",
+                fact: "Canada has the longest coastline in the world at 202,080 km."
+            },
+            {
+                name: "Brazil",
+                flag: "https://flagcdn.com/w320/br.png",
+                capital: "Brasília",
+                continent: "South America",
+                population: "213 million",
+                fact: "Brazil is home to the Amazon Rainforest, which produces 20% of the world's oxygen."
+            },
+            {
+                name: "United Kingdom",
+                flag: "https://flagcdn.com/w320/gb.png",
+                capital: "London",
+                continent: "Europe",
+                population: "67 million",
+                fact: "The UK has no written constitution, relying instead on statutes and common law."
+            },
+            {
+                name: "France",
+                flag: "https://flagcdn.com/w320/fr.png",
+                capital: "Paris",
+                continent: "Europe",
+                population: "67 million",
+                fact: "France is the most visited country in the world with over 89 million tourists annually."
+            },
+            {
+                name: "Germany",
+                flag: "https://flagcdn.com/w320/de.png",
+                capital: "Berlin",
+                continent: "Europe",
+                population: "83 million",
+                fact: "Germany has over 1,500 different types of beer and hosts Oktoberfest, the world's largest beer festival."
+            },
+            {
+                name: "Japan",
+                flag: "https://flagcdn.com/w320/jp.png",
+                capital: "Tokyo",
+                continent: "Asia",
+                population: "126 million",
+                fact: "Japan has more than 5 million vending machines, selling everything from hot meals to umbrellas."
+            },
+            {
+                name: "China",
+                flag: "https://flagcdn.com/w320/cn.png",
+                capital: "Beijing",
+                continent: "Asia",
+                population: "1.4 billion",
+                fact: "China invented paper, gunpowder, the compass, and printing."
+            },
+            {
+                name: "India",
+                flag: "https://flagcdn.com/w320/in.png",
+                capital: "New Delhi",
+                continent: "Asia",
+                population: "1.38 billion",
+                fact: "India has the world's largest film industry, producing about 1,500 movies each year."
+            },
+            {
+                name: "Australia",
+                flag: "https://flagcdn.com/w320/au.png",
+                capital: "Canberra",
+                continent: "Oceania",
+                population: "26 million",
+                fact: "Australia is home to the world's longest fence (5,614 km) built to keep dingoes away from fertile land."
+            },
+            {
+                name: "South Africa",
+                flag: "https://flagcdn.com/w320/za.png",
+                capital: "Pretoria, Cape Town, Bloemfontein",
+                continent: "Africa",
+                population: "60 million",
+                fact: "South Africa has three capital cities and 11 official languages."
+            },
+            {
+                name: "Mexico",
+                flag: "https://flagcdn.com/w320/mx.png",
+                capital: "Mexico City",
+                continent: "North America",
+                population: "126 million",
+                fact: "Mexico introduced chocolate, corn, and chilies to the world."
+            },
+            {
+                name: "Italy",
+                flag: "https://flagcdn.com/w320/it.png",
+                capital: "Rome",
+                continent: "Europe",
+                population: "60 million",
+                fact: "Italy has more UNESCO World Heritage Sites than any other country (58)."
+            },
+            {
+                name: "Spain",
+                flag: "https://flagcdn.com/w320/es.png",
+                capital: "Madrid",
+                continent: "Europe",
+                population: "47 million",
+                fact: "Spain has a festival where people throw tomatoes at each other (La Tomatina)."
+            },
+            {
+                name: "Russia",
+                flag: "https://flagcdn.com/w320/ru.png",
+                capital: "Moscow",
+                continent: "Europe/Asia",
+                population: "146 million",
+                fact: "Russia is the largest country in the world by land area, covering over one-eighth of Earth's inhabited landmass."
+            },
+            {
+                name: "South Korea",
+                flag: "https://flagcdn.com/w320/kr.png",
+                capital: "Seoul",
+                continent: "Asia",
+                population: "51 million",
+                fact: "South Korea has the world's fastest average internet speed."
+            },
+            {
+                name: "Sweden",
+                flag: "https://flagcdn.com/w320/se.png",
+                capital: "Stockholm",
+                continent: "Europe",
+                population: "10 million",
+                fact: "Sweden is the country with the most islands."
+            },
+            {
+                name: "Norway",
+                flag: "https://flagcdn.com/w320/no.png",
+                capital: "Oslo",
+                continent: "Europe",
+                population: "5.4 million",
+                fact: "Norway has the longest coastline in Europe, known for its deep fjords."
+            },
+            {
+                name: "Netherlands",
+                flag: "https://flagcdn.com/w320/nl.png",
+                capital: "Amsterdam",
+                continent: "Europe",
+                population: "17 million",
+                fact: "More than a quarter of the Netherlands is below sea level."
+            },
+            {
+                name: "Switzerland",
+                flag: "https://flagcdn.com/w320/ch.png",
+                capital: "Bern",
+                continent: "Europe",
+                population: "8.6 million",
+                fact: "Switzerland has more high peaks than any other country in Europe."
+            },
+            {
+                name: "Belgium",
+                flag: "https://flagcdn.com/w320/be.png",
+                capital: "Brussels",
+                continent: "Europe",
+                population: "11.5 million",
+                fact: "Belgium is famous for its waffles, chocolate, and beer."
+            },
+            {
+                name: "Austria",
+                flag: "https://flagcdn.com/w320/at.png",
+                capital: "Vienna",
+                continent: "Europe",
+                population: "9 million",
+                fact: "Austria is the birthplace of many famous composers, including Mozart and Strauss."
+            },
+            {
+                name: "Ireland",
+                flag: "https://flagcdn.com/w320/ie.png",
+                capital: "Dublin",
+                continent: "Europe",
+                population: "5 million",
+                fact: "Ireland is known as the 'Emerald Isle' due to its lush green landscapes."
+            },
+            {
+                name: "New Zealand",
+                flag: "https://flagcdn.com/w320/nz.png",
+                capital: "Wellington",
+                continent: "Oceania",
+                population: "5 million",
+                fact: "New Zealand was the first country to give women the right to vote."
+            },
+            {
+                name: "Finland",
+                flag: "https://flagcdn.com/w320/fi.png",
+                capital: "Helsinki",
+                continent: "Europe",
+                population: "5.5 million",
+                fact: "Finland is known as the 'Land of a Thousand Lakes', but actually has 188,000 lakes."
+            },
+            {
+                name: "Denmark",
+                flag: "https://flagcdn.com/w320/dk.png",
+                capital: "Copenhagen",
+                continent: "Europe",
+                population: "5.8 million",
+                fact: "Denmark is home to the oldest flag in the world, the 'Dannebrog', dating back to 1219."
+            },
+            {
+                name: "Portugal",
+                flag: "https://flagcdn.com/w320/pt.png",
+                capital: "Lisbon",
+                continent: "Europe",
+                population: "10 million",
+                fact: "Portugal is the oldest nation-state in Europe."
+            },
+            {
+                name: "Greece",
+                flag: "https://flagcdn.com/w320/gr.png",
+                capital: "Athens",
+                continent: "Europe",
+                population: "10.4 million",
+                fact: "Greece is considered the birthplace of democracy and the Olympic Games."
+            },
+            {
+                name: "Turkey",
+                flag: "https://flagcdn.com/w320/tr.png",
+                capital: "Ankara",
+                continent: "Asia/Europe",
+                population: "84 million",
+                fact: "Istanbul, Turkey, is the only city in the world located on two continents."
+            },
+            {
+                name: "Saudi Arabia",
+                flag: "https://flagcdn.com/w320/sa.png",
+                capital: "Riyadh",
+                continent: "Asia",
+                population: "35 million",
+                fact: "Saudi Arabia is the only country with no rivers."
+            },
+            {
+                name: "United Arab Emirates",
+                flag: "https://flagcdn.com/w320/ae.png",
+                capital: "Abu Dhabi",
+                continent: "Asia",
+                population: "9.9 million",
+                fact: "The UAE is home to the Burj Khalifa, the world's tallest building."
+            },
+            {
+                name: "Israel",
+                flag: "https://flagcdn.com/w320/il.png",
+                capital: "Jerusalem",
+                continent: "Asia",
+                population: "9.3 million",
+                fact: "Israel has the highest number of museums per capita in the world."
+            },
+            {
+                name: "Nigeria",
+                flag: "https://flagcdn.com/w320/ng.png",
+                capital: "Abuja",
+                continent: "Africa",
+                population: "211 million",
+                fact: "Nigeria is the most populous country in Africa."
+            },
+            {
+                name: "Kenya",
+                flag: "https://flagcdn.com/w320/ke.png",
+                capital: "Nairobi",
+                continent: "Africa",
+                population: "53 million",
+                fact: "Kenya is famous for its wildlife safaris and the Great Migration."
+            },
+            {
+                name: "Morocco",
+                flag: "https://flagcdn.com/w320/ma.png",
+                capital: "Rabat",
+                continent: "Africa",
+                population: "37 million",
+                fact: "Morocco is the only African country that is not a member of the African Union."
+            },
+            {
+                name: "Indonesia",
+                flag: "https://flagcdn.com/w320/id.png",
+                capital: "Jakarta",
+                continent: "Asia",
+                population: "276 million",
+                fact: "Indonesia is the world's largest island country, with over 17,000 islands."
+            },
+            {
+                name: "Thailand",
+                flag: "https://flagcdn.com/w320/th.png",
+                capital: "Bangkok",
+                continent: "Asia",
+                population: "70 million",
+                fact: "Thailand is the only Southeast Asian country that has never been colonized by a European power."
+            },
+            {
+                name: "Vietnam",
+                flag: "https://flagcdn.com/w320/vn.png",
+                capital: "Hanoi",
+                continent: "Asia",
+                population: "97 million",
+                fact: "Vietnam is the world's largest exporter of cashew nuts and black pepper."
+            },
+            {
+                name: "Philippines",
+                flag: "https://flagcdn.com/w320/ph.png",
+                capital: "Manila",
+                continent: "Asia",
+                population: "111 million",
+                fact: "The Philippines is the only country in the world whose flag can be flown upside down to indicate a state of war."
+            },
+            {
+                name: "Malaysia",
+                flag: "https://flagcdn.com/w320/my.png",
+                capital: "Kuala Lumpur",
+                continent: "Asia",
+                population: "32 million",
+                fact: "Malaysia is home to the Petronas Twin Towers, once the tallest buildings in the world."
+            },
+            {
+                name: "Singapore",
+                flag: "https://flagcdn.com/w320/sg.png",
+                capital: "Singapore",
+                continent: "Asia",
+                population: "5.7 million",
+                fact: "Singapore is one of only three surviving city-states in the world."
+            },
+            {
+                name: "Colombia",
+                flag: "https://flagcdn.com/w320/co.png",
+                capital: "Bogotá",
+                continent: "South America",
+                population: "51 million",
+                fact: "Colombia is the second most biodiverse country in the world."
+            },
+            {
+                name: "Chile",
+                flag: "https://flagcdn.com/w320/cl.png",
+                capital: "Santiago",
+                continent: "South America",
+                population: "19 million",
+                fact: "Chile is the longest north-south country in the world, stretching over 4,300 km."
+            },
+            {
+                name: "Peru",
+                flag: "https://flagcdn.com/w320/pe.png",
+                capital: "Lima",
+                continent: "South America",
+                population: "33 million",
+                fact: "Peru is home to Machu Picchu, an ancient Inca city."
+            },
+            {
+                name: "Venezuela",
+                flag: "https://flagcdn.com/w320/ve.png",
+                capital: "Caracas",
+                continent: "South America",
+                population: "28 million",
+                fact: "Venezuela has the world's highest waterfall, Angel Falls."
+            },
+            {
+                name: "Poland",
+                flag: "https://flagcdn.com/w320/pl.png",
+                capital: "Warsaw",
+                continent: "Europe",
+                population: "38 million",
+                fact: "Poland is the largest country in Eastern Europe."
+            },
+            {
+                name: "Ukraine",
+                flag: "https://flagcdn.com/w320/ua.png",
+                capital: "Kyiv",
+                continent: "Europe",
+                population: "41 million",
+                fact: "Ukraine is the second-largest country in Europe by area."
+            },
+            {
+                name: "Czech Republic",
+                flag: "https://flagcdn.com/w320/cz.png",
+                capital: "Prague",
+                continent: "Europe",
+                population: "10.7 million",
+                fact: "The Czech Republic has the highest beer consumption per capita in the world."
+            },
+            {
+                name: "Hungary",
+                flag: "https://flagcdn.com/w320/hu.png",
+                capital: "Budapest",
+                continent: "Europe",
+                population: "9.7 million",
+                fact: "Hungary is known for its thermal baths, with over 1,000 natural hot springs."
+            },
+            {
+                name: "Romania",
+                flag: "https://flagcdn.com/w320/ro.png",
+                capital: "Bucharest",
+                continent: "Europe",
+                population: "19 million",
+                fact: "Romania is home to the largest building in Europe, the Palace of the Parliament."
+            },
+            {
+                name: "Algeria",
+                flag: "https://flagcdn.com/w320/dz.png",
+                capital: "Algiers",
+                continent: "Africa",
+                population: "44 million",
+                fact: "Algeria is the largest country in Africa by land area."
+            },
+            {
+                name: "Ethiopia",
+                flag: "https://flagcdn.com/w320/et.png",
+                capital: "Addis Ababa",
+                continent: "Africa",
+                population: "115 million",
+                fact: "Ethiopia is the only African country that was never colonized."
+            },
+            {
+                name: "Egypt",
+                flag: "https://flagcdn.com/w320/eg.png",
+                capital: "Cairo",
+                continent: "Africa/Asia",
+                population: "102 million",
+                fact: "The Great Pyramid of Giza was the tallest man-made structure for over 3,800 years."
+            }
+        ];
+
+        
+        let shuffledCountries = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let correctAnswerCountry = '';
+        let currentMode = ''; 
+        let streak = 0;
+        let maxStreak = 0;
+        let correctAnswersCount = 0;
+        let wrongAnswersCount = 0;
+        let timerInterval;
+        const TOTAL_CLASSIC_QUESTIONS = 10;
+        const TIMED_MODE_DURATION = 60; 
+
+        
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        const modeSelectionScreen = document.getElementById('mode-selection');
+        const classicModeBtn = document.getElementById('classic-mode');
+        const timedModeBtn = document.getElementById('timed-mode');
+        const learnModeBtn = document.getElementById('learn-mode');
+        const highScoresBtn = document.getElementById('high-scores');
+
+        const gameScreen = document.getElementById('game-screen');
+        const questionNumberSpan = document.getElementById('question-number');
+        const totalQuestionsSpan = document.getElementById('total-questions');
+        const scoreSpan = document.getElementById('score');
+        const streakContainer = document.getElementById('streak-container');
+        const streakSpan = document.getElementById('streak');
+        const timerContainer = document.getElementById('timer-container');
+        const timerSpan = document.getElementById('timer');
+        const flagImage = document.getElementById('flag-image');
+        const answerButtons = document.querySelectorAll('.answer-btn');
+        
+        const learnInfo = document.getElementById('learn-info');
+        const correctCountrySpan = document.getElementById('correct-country');
+        const countryCapitalSpan = document.getElementById('country-capital');
+        const countryContinentSpan = document.getElementById('country-continent');
+        const countryPopulationSpan = document.getElementById('country-population');
+        const countryFactSpan = document.getElementById('country-fact');
+        
+        const explainFlagBtn = document.getElementById('explain-flag-btn');
+        const symbolismLoadingSpinner = document.getElementById('symbolism-loading-spinner');
+        const flagSymbolismOutput = document.getElementById('flag-symbolism-output');
+
+
+        const resultsScreen = document.getElementById('results-screen');
+        const finalScoreSpan = document.getElementById('final-score');
+        const correctAnswersSpan = document.getElementById('correct-answers');
+        const wrongAnswersSpan = document.getElementById('wrong-answers');
+        const accuracySpan = document.getElementById('accuracy');
+        const maxStreakSpan = document.getElementById('max-streak');
+        const playAgainBtn = document.getElementById('play-again');
+
+        const highScoresScreen = document.getElementById('high-scores-screen');
+        const highScoresList = document.getElementById('high-scores-list');
+        const backToMenuBtn = document.getElementById('back-to-menu');
+        const homeLink = document.getElementById('home-link'); 
+
+        
+        const correctSound = document.getElementById('correct-sound');
+        const wrongSound = document.getElementById('wrong-sound');
+        const streakSound = document.getElementById('streak-sound');
+        const timeUpSound = document.getElementById('time-up-sound');
+
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function getRandomUniqueItems(sourceArray, count, excludeItems = []) {
+            const uniqueItems = new Set();
+            const availableItems = sourceArray.filter(item => !excludeItems.includes(item));
+
+            if (availableItems.length < count) {
+                console.error("Not enough unique items available to pick from.");
+                return [];
+            }
+
+            while (uniqueItems.size < count) {
+                const randomIndex = Math.floor(Math.random() * availableItems.length);
+                uniqueItems.add(availableItems[randomIndex]);
+            }
+            return Array.from(uniqueItems);
+        }
+
+        function playSound(audioElement) {
+            audioElement.currentTime = 0; 
+            audioElement.play().catch(e => console.log("Audio play failed:", e));
+        }
+
+        function showScreen(screenId) {
+            const screens = [modeSelectionScreen, gameScreen, resultsScreen, highScoresScreen];
+            screens.forEach(screen => {
+                if (screen.id === screenId) {
+                    screen.classList.remove('hidden');
+                } else {
+                    screen.classList.add('hidden');
+                }
+            });
+        }
+
+        function resetGameAndUI() {
+            clearInterval(timerInterval); 
+            score = 0;
+            currentQuestionIndex = 0;
+            streak = 0;
+            maxStreak = 0;
+            correctAnswersCount = 0;
+            wrongAnswersCount = 0;
+            shuffledCountries = []; 
+
+            
+            scoreSpan.textContent = 0;
+            streakSpan.textContent = 0;
+            questionNumberSpan.textContent = 0;
+            totalQuestionsSpan.textContent = 0;
+            timerSpan.textContent = TIMED_MODE_DURATION;
+            timerSpan.classList.remove('text-red-500', 'pulse');
+
+            flagImage.src = '';
+            flagImage.alt = 'Country Flag';
+            flagImage.classList.remove('glowing-border-correct', 'glowing-border-wrong');
+
+            answerButtons.forEach(button => {
+                button.textContent = '';
+                button.classList.remove('correct', 'wrong');
+                button.classList.add('from-blue-500', 'to-blue-700', 'hover:from-blue-600', 'hover:to-blue-800');
+                button.disabled = false;
+            });
+
+            learnInfo.classList.add('hidden');
+            flagSymbolismOutput.classList.add('hidden');
+            flagSymbolismOutput.innerHTML = '';
+            explainFlagBtn.disabled = false;
+
+            streakContainer.classList.add('hidden');
+            timerContainer.classList.add('hidden');
+        }
+
+        
+        function initializeGame(mode) {
+            resetGameAndUI(); 
+            currentMode = mode;
+            shuffledCountries = [...countries];
+            shuffleArray(shuffledCountries);
+
+            questionNumberSpan.textContent = currentQuestionIndex + 1;
+
+            
+            if (currentMode === 'timed') {
+                timerContainer.classList.remove('hidden');
+                totalQuestionsSpan.textContent = '∞'; 
+                startTimer();
+            } else if (currentMode === 'classic' || currentMode === 'learn') {
+                totalQuestionsSpan.textContent = TOTAL_CLASSIC_QUESTIONS;
+                streakContainer.classList.remove('hidden'); 
+            }
+
+            showScreen('game-screen');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            
+            if ((currentMode === 'classic' || currentMode === 'learn') && currentQuestionIndex >= TOTAL_CLASSIC_QUESTIONS) {
+                endGame();
+                return;
+            }
+
+            
+            const currentCountryData = shuffledCountries[currentQuestionIndex];
+            correctAnswerCountry = currentCountryData.name;
+
+            
+            flagImage.src = currentCountryData.flag;
+            flagImage.alt = `Flag of ${currentCountryData.name}`;
+            flagImage.classList.remove('glowing-border-correct', 'glowing-border-wrong'); 
+
+            
+            const allCountryNames = countries.map(c => c.name);
+            const wrongOptions = getRandomUniqueItems(allCountryNames, 3, [correctAnswerCountry]);
+            let options = [correctAnswerCountry, ...wrongOptions];
+            shuffleArray(options);
+
+            
+            answerButtons.forEach((button, index) => {
+                button.textContent = options[index];
+                button.classList.remove('correct', 'wrong'); 
+                button.classList.add('from-blue-500', 'to-blue-700', 'hover:from-blue-600', 'hover:to-blue-800'); 
+                button.disabled = false; 
+            });
+
+            learnInfo.classList.add('hidden'); 
+            flagSymbolismOutput.classList.add('hidden'); 
+            flagSymbolismOutput.innerHTML = ''; 
+            explainFlagBtn.disabled = false; 
+
+            questionNumberSpan.textContent = currentQuestionIndex + 1; 
+        }
+
+        function handleAnswer(selectedButton) {
+            
+            answerButtons.forEach(button => {
+                button.disabled = true;
+                button.classList.remove('hover:from-blue-600', 'hover:to-blue-800'); 
+            });
+
+            const selectedAnswer = selectedButton.textContent;
+
+            if (selectedAnswer === correctAnswerCountry) {
+                score += 10; 
+                scoreSpan.textContent = score;
+                streak++;
+                correctAnswersCount++;
+                playSound(correctSound);
+                selectedButton.classList.add('correct'); 
+                flagImage.classList.add('glowing-border-correct'); 
+                if (streak > 0 && streak % 3 === 0) { 
+                    playSound(streakSound);
+                }
+            } else {
+                streak = 0; 
+                wrongAnswersCount++;
+                playSound(wrongSound);
+                selectedButton.classList.add('wrong'); 
+                flagImage.classList.add('glowing-border-wrong'); 
+
+                
+                answerButtons.forEach(button => {
+                    if (button.textContent === correctAnswerCountry) {
+                        button.classList.add('correct');
+                    }
+                });
+            }
+            streakSpan.textContent = streak;
+            maxStreak = Math.max(maxStreak, streak); 
+
+            if (currentMode === 'learn') {
+                displayLearnInfo();
+            }
+
+            
+            setTimeout(() => {
+                currentQuestionIndex++;
+                loadQuestion();
+            }, 1500); 
+        }
+
+        function displayLearnInfo() {
+            const country = countries.find(c => c.name === correctAnswerCountry);
+            if (country) {
+                correctCountrySpan.textContent = country.name;
+                countryCapitalSpan.textContent = country.capital;
+                countryContinentSpan.textContent = country.continent;
+                countryPopulationSpan.textContent = country.population;
+                countryFactSpan.textContent = country.fact;
+                learnInfo.classList.remove('hidden');
+            }
+        }
+
+        
+        async function explainFlagSymbolism() {
+            explainFlagBtn.disabled = true; 
+            symbolismLoadingSpinner.classList.remove('hidden'); 
+            flagSymbolismOutput.classList.add('hidden'); 
+            flagSymbolismOutput.innerHTML = ''; 
+
+            const prompt = `Explain the symbolism and meaning behind the colors and symbols on the flag of ${correctAnswerCountry}. Keep the explanation concise, about 2-3 paragraphs.`;
+
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+            const payload = { contents: chatHistory };
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    flagSymbolismOutput.innerHTML = `<p>${text.replace(/\n\n/g, '</p><p>')}</p>`; 
+                    flagSymbolismOutput.classList.remove('hidden');
+                } else {
+                    flagSymbolismOutput.innerHTML = '<p class="text-red-500">Could not generate explanation. Please try again.</p>';
+                    flagSymbolismOutput.classList.remove('hidden');
+                    console.error("Gemini API response structure unexpected:", result);
+                }
+            } catch (error) {
+                flagSymbolismOutput.innerHTML = '<p class="text-red-500">Error fetching explanation. Please check your network connection.</p>';
+                flagSymbolismOutput.classList.remove('hidden');
+                console.error("Error calling Gemini API:", error);
+            } finally {
+                symbolismLoadingSpinner.classList.add('hidden'); 
+                explainFlagBtn.disabled = false; 
+            }
+        }
+
+        function startTimer() {
+            let timeLeft = TIMED_MODE_DURATION;
+            timerSpan.textContent = timeLeft;
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerSpan.textContent = timeLeft;
+                if (timeLeft <= 10) {
+                    timerSpan.classList.add('text-red-500', 'pulse'); 
+                } else {
+                    timerSpan.classList.remove('text-red-500', 'pulse');
+                }
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    playSound(timeUpSound);
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function endGame() {
+            clearInterval(timerInterval); 
+            showScreen('results-screen');
+
+            finalScoreSpan.textContent = score;
+            correctAnswersSpan.textContent = correctAnswersCount;
+            wrongAnswersSpan.textContent = wrongAnswersCount;
+            maxStreakSpan.textContent = maxStreak;
+
+            const totalAttempted = correctAnswersCount + wrongAnswersCount;
+            const accuracy = totalAttempted > 0 ? ((correctAnswersCount / totalAttempted) * 100).toFixed(1) : 0;
+            accuracySpan.textContent = accuracy;
+
+            saveHighScore(currentMode, score);
+        }
+
+        
+        function saveHighScore(mode, newScore) {
+            let highScores = JSON.parse(localStorage.getItem('flagQuizHighScores')) || {};
+            if (!highScores[mode] || newScore > highScores[mode]) {
+                highScores[mode] = newScore;
+                localStorage.setItem('flagQuizHighScores', JSON.stringify(highScores));
+            }
+        }
+
+        function displayHighScores() {
+            showScreen('high-scores-screen');
+            const highScores = JSON.parse(localStorage.getItem('flagQuizHighScores')) || {};
+            highScoresList.innerHTML = ''; 
+
+            const modes = {
+                'classic': 'Classic Mode',
+                'timed': 'Timed Mode',
+                'learn': 'Learn Mode'
+            };
+
+            for (const modeKey in modes) {
+                const scoreValue = highScores[modeKey] !== undefined ? highScores[modeKey] : 'N/A';
+                const scoreColor = modeKey === 'classic' ? 'text-indigo-600 dark:text-indigo-300' :
+                                   modeKey === 'timed' ? 'text-amber-600 dark:text-amber-300' :
+                                   'text-emerald-600 dark:text-emerald-300';
+
+                const listItem = `
+                    <div class="flex justify-between items-center py-2 px-3 rounded-md bg-gray-50 dark:bg-gray-800 shadow-sm">
+                        <span>${modes[modeKey]}</span>
+                        <span class="font-semibold ${scoreColor}">${scoreValue}</span>
+                    </div>
+                `;
+                highScoresList.innerHTML += listItem;
+            }
+        }
+
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            
+            if (body.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('theme') === 'dark') {
+                body.classList.add('dark');
+            } else {
+                body.classList.remove('dark'); 
+            }
+        });
+
+        classicModeBtn.addEventListener('click', () => initializeGame('classic'));
+        timedModeBtn.addEventListener('click', () => initializeGame('timed'));
+        learnModeBtn.addEventListener('click', () => initializeGame('learn'));
+        highScoresBtn.addEventListener('click', displayHighScores);
+
+        answerButtons.forEach(button => {
+            button.addEventListener('click', () => handleAnswer(button));
+        });
+
+        playAgainBtn.addEventListener('click', () => showScreen('mode-selection'));
+        backToMenuBtn.addEventListener('click', () => showScreen('mode-selection'));
+
+        
+        homeLink.addEventListener('click', (event) => {
+            event.preventDefault(); 
+            resetGameAndUI(); 
+            showScreen('mode-selection'); 
+        });
+
+        
+        explainFlagBtn.addEventListener('click', explainFlagSymbolism);
+
+        
+        showScreen('mode-selection');
+    </script>
+</body>
+</html>
