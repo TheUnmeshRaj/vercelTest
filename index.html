@@ -291,11 +291,6 @@
         </div>
     </div>
 
-    <audio id="correct-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3"></audio>
-    <audio id="wrong-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3"></audio>
-    <audio id="streak-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
-    <audio id="time-up-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3"></audio>
-
     <script>
     const countries = [
         {name: "Andorra", flag: "https://flagcdn.com/w320/ad.png"},
@@ -584,12 +579,6 @@
         const flagImage = document.getElementById('flag-image');
         const answerButtons = document.querySelectorAll('.answer-btn');
 
-        // Removed elements for Flag Symbolism
-        // const correctCountrySpan = document.getElementById('correct-country');
-        // const explainFlagBtn = document.getElementById('explain-flag-btn');
-        // const symbolismLoadingSpinner = document.getElementById('symbolism-loading-spinner');
-        // const flagSymbolismOutput = document.getElementById('flag-symbolism-output');
-
         const resultsScreen = document.getElementById('results-screen');
         const finalScoreSpan = document.getElementById('final-score');
         const correctAnswersSpan = document.getElementById('correct-answers');
@@ -602,12 +591,6 @@
         const highScoresList = document.getElementById('high-scores-list');
         const backToMenuBtn = document.getElementById('back-to-menu');
         const homeLink = document.getElementById('home-link');
-
-        const correctSound = document.getElementById('correct-sound');
-        const wrongSound = document.getElementById('wrong-sound');
-        const streakSound = document.getElementById('streak-sound');
-        const timeUpSound = document.getElementById('time-up-sound');
-
 
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -622,7 +605,6 @@
 
             if (availableItems.length < count) {
                 console.error("Not enough unique items available to pick from. Consider adding more countries or reducing quiz options.");
-                // Fallback: If not enough unique items, just return what's available or duplicate if necessary (not ideal for quiz but prevents crash)
                 if (availableItems.length > 0) {
                      while (uniqueItems.size < count) {
                         const randomIndex = Math.floor(Math.random() * availableItems.length);
@@ -638,12 +620,6 @@
             }
             return Array.from(uniqueItems);
         }
-
-        function playSound(audioElement) {
-            audioElement.currentTime = 0;
-            audioElement.play().catch(e => console.log("Audio play failed:", e));
-        }
-
         function showScreen(screenId) {
             const screens = [modeSelectionScreen, gameScreen, resultsScreen, highScoresScreen];
             screens.forEach(screen => {
@@ -683,11 +659,6 @@
                 button.disabled = false;
             });
 
-            // Removed flag symbolism UI reset
-            // flagSymbolismOutput.classList.add('hidden');
-            // flagSymbolismOutput.innerHTML = '';
-            // explainFlagBtn.disabled = false;
-
             streakContainer.classList.add('hidden');
             timerContainer.classList.add('hidden');
         }
@@ -703,7 +674,7 @@
 
             if (currentMode === 'timed') {
                 timerContainer.classList.remove('hidden');
-                totalQuestionsSpan.textContent = '∞'; // Infinite questions for timed mode
+                totalQuestionsSpan.textContent = '∞'; 
                 startTimer();
             } else if (currentMode === 'classic') {
                 totalQuestionsSpan.textContent = TOTAL_CLASSIC_QUESTIONS;
@@ -739,10 +710,7 @@
             flagImage.alt = `Flag of ${currentCountryData.name}`;
             flagImage.classList.remove('glowing-border-correct', 'glowing-border-wrong');
 
-            // Removed correctCountrySpan update
-
             const allCountryNames = countries.map(c => c.name);
-            // Ensure the correct answer is excluded when picking wrong options
             const wrongOptions = getRandomUniqueItems(allCountryNames, 3, [correctAnswerCountry]);
             let options = [correctAnswerCountry, ...wrongOptions];
             shuffleArray(options);
@@ -753,16 +721,7 @@
                 button.classList.add('from-blue-500', 'to-blue-700', 'hover:from-blue-600', 'hover:to-blue-800');
                 button.disabled = false;
             });
-
-            // Removed flag symbolism UI state reset
-            // flagSymbolismOutput.classList.add('hidden');
-            // flagSymbolismOutput.innerHTML = '';
-            // explainFlagBtn.disabled = false;
-
-            if (currentMode === 'classic') {
-                questionNumberSpan.textContent = currentQuestionIndex + 1;
-            }
-            // For timed mode, question number isn't explicitly tracked this way.
+            questionNumberSpan.textContent = currentQuestionIndex + 1;
         }
 
         function handleAnswer(selectedButton) {
@@ -779,16 +738,12 @@
                 scoreSpan.textContent = score;
                 streak++;
                 correctAnswersCount++;
-                playSound(correctSound);
                 selectedButton.classList.add('correct');
                 flagImage.classList.add('glowing-border-correct');
-                if (streak > 0 && streak % 3 === 0) {
-                    playSound(streakSound);
-                }
+               
             } else {
                 streak = 0; // Reset streak on wrong answer
                 wrongAnswersCount++;
-                playSound(wrongSound);
                 selectedButton.classList.add('wrong');
                 flagImage.classList.add('glowing-border-wrong');
 
@@ -824,7 +779,6 @@
 
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
-                    playSound(timeUpSound);
                     endGame();
                 }
             }, 1000);
