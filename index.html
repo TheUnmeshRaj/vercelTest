@@ -1,144 +1,143 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>World Flag Quiz</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Flag Master - Navigate the Grand Line of Flags!</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Pirata+One&family=Bungee&display=swap');
+
+  :root {
+    --radius: 1rem;
+    --blur: 12px;
+    --shadow: 0 12px 30px rgba(0,0,0,0.1);
+    --font: 'Inter', system-ui, sans-serif;
+    --pirate-font: 'Pirata One', cursive;
+    --title-font: 'Bungee', cursive;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body, html {
+    height: 100%;
+    font-family: var(--font);
+    background: linear-gradient(120deg, #dbeafe, #f8fafc);
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    font-family: var(--pirate-font);
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1e293b;
+    padding: 1rem 0;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .container {
+    max-width: 480px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(var(--blur));
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    text-align: center;
+    margin: auto;
+    animation: jumpIn 0.8s ease-out;
+  }
+
+  @keyframes jumpIn {
+    0% {
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  h1 {
+    font-family: var(--title-font);
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  p {
+    font-size: 1.1rem;
+    color: #475569;
+    margin-bottom: 2rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  a.button {
+    background-image: linear-gradient(135deg, #6366f1, #8b5cf6);
+    padding: 1rem 2.5rem;
+    border-radius: 0.75rem;
+    color: white;
+    font-family: var(--title-font);
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    transition: background 0.3s ease;
+    display: inline-block;
+  }
+
+  a.button:hover {
+    background-image: linear-gradient(135deg, #8b5cf6, #6366f1);
+  }
+
+  footer {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #64748b;
+    text-align: center;
+    padding: 1rem 0;
+    flex-shrink: 0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body, html {
+      background: linear-gradient(120deg, #0f172a, #1e293b);
+      color: #e2e8f0;
+    }
+    header {
+      color: #e2e8f0;
+    }
+    .container {
+      background: rgba(0,0,0,0.15);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+    }
+    h1 {
+      color: #f1f5f9;
+    }
+    p {
+      color: #cbd5e1;
+    }
+    footer {
+      color: #94a3b8;
+    }
+  }
+</style>
 </head>
-<body class="bg-gray-100 text-gray-900 min-h-screen transition-all">
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
-        <header class="flex justify-between items-center mb-8">
-            <a href="#" id="home-link" class="no-underline">
-                <h1 class="text-3xl font-extrabold font-poppins text-indigo-700 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors">
-                    🌍 World Flag Quiz
-                </h1>
-            </a>
-            <button id="theme-toggle" class="p-3 rounded-full bg-gray-200 dark:bg-gray-700 shadow-md transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                <i class="fas fa-moon text-gray-700 dark:hidden"></i>
-                <i class="fas fa-sun text-yellow-400 hidden dark:inline"></i>
-            </button>
-        </header>
-
-        <div id="mode-selection" class="text-center mb-8 glass-card p-6 md:p-8">
-            <h2 class="text-3xl font-bold font-poppins mb-6 text-gray-800 dark:text-gray-100">Select Game Mode</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <button id="classic-mode" class="gradient-button py-4 px-6 shadow-lg">
-                    <i class="fas fa-flag mr-3 text-2xl"></i> Classic Mode
-                    <p class="text-sm mt-1 opacity-90 font-inter">Answer 10 flag questions</p>
-                </button>
-                <button id="timed-mode" class="gradient-button py-4 px-6 shadow-lg">
-                    <i class="fas fa-stopwatch mr-3 text-2xl"></i> Timed Mode
-                    <p class="text-sm mt-1 opacity-90 font-inter">60 seconds to answer as many as you can</p>
-                </button>
-                <button id="high-scores" class="gradient-button py-4 px-6 shadow-lg">
-                    <i class="fas fa-trophy mr-3 text-2xl"></i> High Scores
-                    <p class="text-sm mt-1 opacity-90 font-inter">View your best performances</p>
-                </button>
-            </div>
-        </div>
-
-        <div id="game-screen" class="hidden">
-            <div class="flex flex-wrap justify-center md:justify-between items-center mb-6 gap-4">
-                <div class="glass-card p-3 rounded-lg shadow-md flex items-center space-x-2 min-w-[120px] justify-center">
-                    <span class="text-sm text-gray-600 dark:text-gray-300 font-medium">Question</span>
-                    <div class="text-xl font-bold font-poppins"><span id="question-number">1</span>/<span id="total-questions">10</span></div>
-                </div>
-                <div class="glass-card p-3 rounded-lg shadow-md flex items-center space-x-2 min-w-[120px] justify-center">
-                    <span class="text-sm text-gray-600 dark:text-gray-300 font-medium">Score</span>
-                    <div class="text-xl font-bold font-poppins"><span id="score">0</span></div>
-                </div>
-                <div id="streak-container" class="hidden glass-card p-3 rounded-lg shadow-md flex items-center space-x-2 min-w-[120px] justify-center">
-                    <span class="text-sm text-gray-600 dark:text-gray-300 font-medium">Streak</span>
-                    <div class="text-xl font-bold streak-glow font-poppins"><span id="streak">0</span><i class="fas fa-fire ml-1 text-amber-500"></i></div>
-                </div>
-                <div id="timer-container" class="hidden glass-card p-3 rounded-lg shadow-md flex items-center space-x-2 min-w-[120px] justify-center">
-                    <span class="text-sm text-gray-600 dark:text-gray-300 font-medium">Time Left</span>
-                    <div class="text-xl font-bold font-poppins"><span id="timer">60</span>s</div>
-                </div>
-            </div>
-
-            <div class="glass-card rounded-xl p-6 mb-8 shadow-lg flag-display-area">
-                <div class="flex justify-center mb-6">
-                    <div class="w-full max-w-md h-48 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center flag-shadow overflow-hidden">
-                        <img id="flag-image" src="" alt="Country Flag" class="h-full object-contain">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="answer-btn gradient-button from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 py-4 px-6 text-left font-inter"></button>
-                    <button class="answer-btn gradient-button from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 py-4 px-6 text-left font-inter"></button>
-                    <button class="answer-btn gradient-button from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 py-4 px-6 text-left font-inter"></button>
-                    <button class="answer-btn gradient-button from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 py-4 px-6 text-left font-inter"></button>
-                </div>
-
-                </div>
-        </div>
-
-        <div id="results-screen" class="hidden text-center">
-            <div class="glass-card rounded-xl p-8 shadow-lg max-w-md mx-auto">
-                <h2 class="text-3xl font-bold font-poppins mb-6 text-indigo-600 dark:text-indigo-400">Quiz Complete!</h2>
-
-                <div class="mb-6">
-                    <div class="text-6xl font-extrabold font-poppins mb-2 text-indigo-700 dark:text-indigo-300"><span id="final-score">0</span></div>
-                    <p class="text-gray-500 dark:text-gray-400 font-inter">Total Score</p>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4 mb-6 text-gray-700 dark:text-gray-200 font-inter">
-                    <div class="glass-card p-3 rounded-lg">
-                        <div class="text-xl font-bold font-poppins"><span id="correct-answers">0</span></div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Correct</p>
-                    </div>
-                    <div class="glass-card p-3 rounded-lg">
-                        <div class="text-xl font-bold font-poppins"><span id="wrong-answers">0</span></div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Wrong</p>
-                    </div>
-                    <div class="glass-card p-3 rounded-lg">
-                        <div class="text-xl font-bold font-poppins"><span id="accuracy">0</span>%</div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Accuracy</p>
-                    </div>
-                    <div class="glass-card p-3 rounded-lg">
-                        <div class="text-xl font-bold font-poppins"><span id="max-streak">0</span></div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Max Streak</p>
-                    </div>
-                </div>
-
-                <button id="play-again" class="gradient-button py-3 px-6 shadow-md w-full">
-                    Play Again <i class="fas fa-redo ml-2"></i>
-                </button>
-            </div>
-        </div>
-
-        <div id="high-scores-screen" class="hidden">
-            <div class="glass-card rounded-xl p-6 shadow-lg max-w-md mx-auto">
-                <h2 class="text-3xl font-bold font-poppins mb-6 text-center text-indigo-600 dark:text-indigo-400">High Scores</h2>
-
-                <div class="mb-4 text-gray-700 dark:text-gray-200 font-inter">
-                    <div class="flex justify-between mb-3 border-b pb-2 border-gray-300 dark:border-gray-600">
-                        <span class="font-bold text-lg">Mode</span>
-                        <span class="font-bold text-lg">Score</span>
-                    </div>
-                    <div id="high-scores-list" class="space-y-3">
-                        <div class="flex justify-between items-center py-2 px-3 rounded-md bg-gray-50 dark:bg-gray-800">
-                            <span>Classic Mode</span>
-                            <span class="font-semibold text-indigo-600 dark:text-indigo-300">100</span>
-                        </div>
-                        <div class="flex justify-between items-center py-2 px-3 rounded-md bg-gray-50 dark:bg-gray-800">
-                            <span>Timed Mode</span>
-                            <span class="font-semibold text-amber-600 dark:text-amber-300">85</span>
-                        </div>
-                    </div>
-                </div>
-
-                <button id="back-to-menu" class="gradient-button py-3 px-6 shadow w-full">
-                    <i class="fas fa-arrow-left mr-2"></i> Back to Menu
-                </button>
-            </div>
-        </div>
-    </div>
-    <script src="script.js"></script>
+<body>
+  <header>Flag Master</header>
+  <div class="container">
+    <h1>Welcome to Flag Master!</h1>
+    <p>Test your knowledge of world flags and become a flag expert!</p>
+    <a href="game.html" class="button">Start Adventure!</a>
+  </div>
+  <footer>&copy; 2025 Flag Master. All rights reserved.</footer>
 </body>
 </html>
