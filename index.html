@@ -8,10 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        
+
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #e0f2fe, #f0f4f8); 
+            background: linear-gradient(135deg, #e0f2fe, #f0f4f8);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -22,13 +22,13 @@
         }
 
         body.dark {
-            background: linear-gradient(135deg, #1a202c, #2d3748); 
+            background: linear-gradient(135deg, #1a202c, #2d3748);
             color: #e2e8f0;
         }
 
-        
+
         .glass-card {
-            background-color: rgba(255, 255, 255, 0.1); 
+            background-color: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
@@ -37,17 +37,17 @@
         }
 
         .dark .glass-card {
-            background-color: rgba(0, 0, 0, 0.2); 
+            background-color: rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
         }
 
-        
+
         .gradient-button {
             background-size: 200% auto;
             transition: all 0.3s ease-in-out;
-            border-radius: 0.75rem; 
-            padding: 0.75rem 1.5rem; 
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.5rem;
             font-weight: 600;
             color: white;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -57,53 +57,51 @@
         }
 
         .gradient-button:hover {
-            background-position: right center; 
+            background-position: right center;
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
         }
 
         .gradient-button:focus {
             outline: none;
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.5); 
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.5);
         }
 
-        
-        #classic-mode { background-image: linear-gradient(to right, #6366f1, #8b5cf6, #a855f7); } 
-        #timed-mode { background-image: linear-gradient(to right, #f59e0b, #fbbf24, #fcd34d); } 
-        #learn-mode { background-image: linear-gradient(to right, #10b981, #059669, #047857); } 
-        #high-scores { background-image: linear-gradient(to right, #a855f7, #c084fc, #d8b4fe); } 
-        
-        #play-again { background-image: linear-gradient(to right, #f59e0b, #fbbf24); } 
+
+        #classic-mode { background-image: linear-gradient(to right, #6366f1, #8b5cf6, #a855f7); }
+        #timed-mode { background-image: linear-gradient(to right, #f59e0b, #fbbf24, #fcd34d); }
+        #high-scores { background-image: linear-gradient(to right, #a855f7, #c084fc, #d8b4fe); }
+        #play-again { background-image: linear-gradient(to right, #f59e0b, #fbbf24); }
         #back-to-menu {
-            background-image: linear-gradient(to right, #94a3b8, #64748b); 
-            color: #e2e8f0; 
+            background-image: linear-gradient(to right, #94a3b8, #64748b);
+            color: #e2e8f0;
         }
         .dark #back-to-menu {
             background-image: linear-gradient(to right, #475569, #334155);
         }
 
-        
+
         .glowing-border-correct {
-            border: 2px solid #34d399; 
+            border: 2px solid #34d399;
             box-shadow: 0 0 15px 3px rgba(52, 211, 153, 0.7);
         }
         .glowing-border-wrong {
-            border: 2px solid #ef4444; 
+            border: 2px solid #ef4444;
             box-shadow: 0 0 15px 3px rgba(239, 68, 68, 0.7);
         }
 
         .streak-glow {
-            text-shadow: 0 0 12px rgba(255, 215, 0, 0.9); 
-            animation: pulse 1.5s infinite; 
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.9);
+            animation: pulse 1.5s infinite;
         }
 
-        
+
         .flag-display-area {
             position: relative;
-            background: rgba(255, 255, 255, 0.05); 
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 1rem;
             padding: 1.5rem;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1); 
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .dark .flag-display-area {
             background: rgba(0, 0, 0, 0.1);
@@ -112,41 +110,41 @@
 
         #flag-image {
             max-width: 100%;
-            height: 160px; 
+            height: 160px;
             object-fit: contain;
             border-radius: 0.75rem;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15); 
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
             transition: all 0.3s ease-in-out;
         }
         .dark #flag-image {
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
         }
 
-        
+
         .answer-btn.correct {
-            background: linear-gradient(to right, #34d399, #10b981); 
+            background: linear-gradient(to right, #34d399, #10b981);
             color: white;
             box-shadow: 0 4px 15px rgba(52, 211, 153, 0.5);
             border: 2px solid #34d399;
         }
         .answer-btn.wrong {
-            background: linear-gradient(to right, #ef4444, #dc2626); 
+            background: linear-gradient(to right, #ef4444, #dc2626);
             color: white;
             box-shadow: 0 4px 15px rgba(239, 68, 68, 0.5);
             border: 2px solid #ef4444;
         }
 
-        
+
         .transition-all {
             transition-property: all;
             transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
             transition-duration: 300ms;
         }
 
-        
+
         .spinner {
             border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #6366f1; 
+            border-left-color: #6366f1;
             border-radius: 50%;
             width: 24px;
             height: 24px;
@@ -154,7 +152,7 @@
         }
         .dark .spinner {
             border-color: rgba(255, 255, 255, 0.2);
-            border-left-color: #a855f7; 
+            border-left-color: #a855f7;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -186,10 +184,6 @@
                 <button id="timed-mode" class="gradient-button py-4 px-6 shadow-lg">
                     <i class="fas fa-stopwatch mr-3 text-2xl"></i> Timed Mode
                     <p class="text-sm mt-1 opacity-90 font-inter">60 seconds to answer as many as you can</p>
-                </button>
-                <button id="learn-mode" class="gradient-button py-4 px-6 shadow-lg">
-                    <i class="fas fa-graduation-cap mr-3 text-2xl"></i> Learn Mode
-                    <p class="text-sm mt-1 opacity-90 font-inter">Get detailed info after each answer</p>
                 </button>
                 <button id="high-scores" class="gradient-button py-4 px-6 shadow-lg">
                     <i class="fas fa-trophy mr-3 text-2xl"></i> High Scores
@@ -231,35 +225,8 @@
                     <button class="answer-btn gradient-button from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 py-4 px-6 text-left font-inter"></button>
                     <button class="answer-btn gradient-button from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 py-4 px-6 text-left font-inter"></button>
                 </div>
-            </div>
 
-            <div id="learn-info" class="hidden mt-8 glass-card rounded-xl p-6 shadow-lg">
-                <h3 class="text-xl font-semibold font-poppins mb-4 text-indigo-600 dark:text-indigo-400">About <span id="correct-country"></span></h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-200 font-inter">
-                    <div>
-                        <p class="font-medium">Capital:</p>
-                        <p id="country-capital" class="mb-3"></p>
-                        <p class="font-medium">Continent:</p>
-                        <p id="country-continent" class="mb-3"></p>
-                    </div>
-                    <div>
-                        <p class="font-medium">Population:</p>
-                        <p id="country-population" class="mb-3"></p>
-                        <p id="country-fact" class="italic"></p>
-                    </div>
                 </div>
-                <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-                    <button id="explain-flag-btn" class="gradient-button from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 py-3 px-6 shadow-md w-full">
-                        ✨ Explain Flag Symbolism
-                    </button>
-                    <div id="symbolism-loading-spinner" class="hidden flex justify-center items-center mt-4">
-                        <div class="spinner"></div>
-                        <span class="ml-2 text-gray-600 dark:text-gray-300">Generating explanation...</span>
-                    </div>
-                    <div id="flag-symbolism-output" class="mt-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg text-sm text-left shadow-inner hidden">
-                        </div>
-                </div>
-            </div>
         </div>
 
         <div id="results-screen" class="hidden text-center">
@@ -330,455 +297,280 @@
     <audio id="time-up-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3"></audio>
 
     <script>
-        const countries = [
-            {
-                name: "United States",
-                flag: "https://flagcdn.com/w320/us.png",
-                capital: "Washington, D.C.",
-                continent: "North America",
-                population: "331 million",
-                fact: "The US has the world's largest economy and is home to the most billionaires."
-            },
-            {
-                name: "Canada",
-                flag: "https://flagcdn.com/w320/ca.png",
-                capital: "Ottawa",
-                continent: "North America",
-                population: "38 million",
-                fact: "Canada has the longest coastline in the world at 202,080 km."
-            },
-            {
-                name: "Brazil",
-                flag: "https://flagcdn.com/w320/br.png",
-                capital: "Brasília",
-                continent: "South America",
-                population: "213 million",
-                fact: "Brazil is home to the Amazon Rainforest, which produces 20% of the world's oxygen."
-            },
-            {
-                name: "United Kingdom",
-                flag: "https://flagcdn.com/w320/gb.png",
-                capital: "London",
-                continent: "Europe",
-                population: "67 million",
-                fact: "The UK has no written constitution, relying instead on statutes and common law."
-            },
-            {
-                name: "France",
-                flag: "https://flagcdn.com/w320/fr.png",
-                capital: "Paris",
-                continent: "Europe",
-                population: "67 million",
-                fact: "France is the most visited country in the world with over 89 million tourists annually."
-            },
-            {
-                name: "Germany",
-                flag: "https://flagcdn.com/w320/de.png",
-                capital: "Berlin",
-                continent: "Europe",
-                population: "83 million",
-                fact: "Germany has over 1,500 different types of beer and hosts Oktoberfest, the world's largest beer festival."
-            },
-            {
-                name: "Japan",
-                flag: "https://flagcdn.com/w320/jp.png",
-                capital: "Tokyo",
-                continent: "Asia",
-                population: "126 million",
-                fact: "Japan has more than 5 million vending machines, selling everything from hot meals to umbrellas."
-            },
-            {
-                name: "China",
-                flag: "https://flagcdn.com/w320/cn.png",
-                capital: "Beijing",
-                continent: "Asia",
-                population: "1.4 billion",
-                fact: "China invented paper, gunpowder, the compass, and printing."
-            },
-            {
-                name: "India",
-                flag: "https://flagcdn.com/w320/in.png",
-                capital: "New Delhi",
-                continent: "Asia",
-                population: "1.38 billion",
-                fact: "India has the world's largest film industry, producing about 1,500 movies each year."
-            },
-            {
-                name: "Australia",
-                flag: "https://flagcdn.com/w320/au.png",
-                capital: "Canberra",
-                continent: "Oceania",
-                population: "26 million",
-                fact: "Australia is home to the world's longest fence (5,614 km) built to keep dingoes away from fertile land."
-            },
-            {
-                name: "South Africa",
-                flag: "https://flagcdn.com/w320/za.png",
-                capital: "Pretoria, Cape Town, Bloemfontein",
-                continent: "Africa",
-                population: "60 million",
-                fact: "South Africa has three capital cities and 11 official languages."
-            },
-            {
-                name: "Mexico",
-                flag: "https://flagcdn.com/w320/mx.png",
-                capital: "Mexico City",
-                continent: "North America",
-                population: "126 million",
-                fact: "Mexico introduced chocolate, corn, and chilies to the world."
-            },
-            {
-                name: "Italy",
-                flag: "https://flagcdn.com/w320/it.png",
-                capital: "Rome",
-                continent: "Europe",
-                population: "60 million",
-                fact: "Italy has more UNESCO World Heritage Sites than any other country (58)."
-            },
-            {
-                name: "Spain",
-                flag: "https://flagcdn.com/w320/es.png",
-                capital: "Madrid",
-                continent: "Europe",
-                population: "47 million",
-                fact: "Spain has a festival where people throw tomatoes at each other (La Tomatina)."
-            },
-            {
-                name: "Russia",
-                flag: "https://flagcdn.com/w320/ru.png",
-                capital: "Moscow",
-                continent: "Europe/Asia",
-                population: "146 million",
-                fact: "Russia is the largest country in the world by land area, covering over one-eighth of Earth's inhabited landmass."
-            },
-            {
-                name: "South Korea",
-                flag: "https://flagcdn.com/w320/kr.png",
-                capital: "Seoul",
-                continent: "Asia",
-                population: "51 million",
-                fact: "South Korea has the world's fastest average internet speed."
-            },
-            {
-                name: "Sweden",
-                flag: "https://flagcdn.com/w320/se.png",
-                capital: "Stockholm",
-                continent: "Europe",
-                population: "10 million",
-                fact: "Sweden is the country with the most islands."
-            },
-            {
-                name: "Norway",
-                flag: "https://flagcdn.com/w320/no.png",
-                capital: "Oslo",
-                continent: "Europe",
-                population: "5.4 million",
-                fact: "Norway has the longest coastline in Europe, known for its deep fjords."
-            },
-            {
-                name: "Netherlands",
-                flag: "https://flagcdn.com/w320/nl.png",
-                capital: "Amsterdam",
-                continent: "Europe",
-                population: "17 million",
-                fact: "More than a quarter of the Netherlands is below sea level."
-            },
-            {
-                name: "Switzerland",
-                flag: "https://flagcdn.com/w320/ch.png",
-                capital: "Bern",
-                continent: "Europe",
-                population: "8.6 million",
-                fact: "Switzerland has more high peaks than any other country in Europe."
-            },
-            {
-                name: "Belgium",
-                flag: "https://flagcdn.com/w320/be.png",
-                capital: "Brussels",
-                continent: "Europe",
-                population: "11.5 million",
-                fact: "Belgium is famous for its waffles, chocolate, and beer."
-            },
-            {
-                name: "Austria",
-                flag: "https://flagcdn.com/w320/at.png",
-                capital: "Vienna",
-                continent: "Europe",
-                population: "9 million",
-                fact: "Austria is the birthplace of many famous composers, including Mozart and Strauss."
-            },
-            {
-                name: "Ireland",
-                flag: "https://flagcdn.com/w320/ie.png",
-                capital: "Dublin",
-                continent: "Europe",
-                population: "5 million",
-                fact: "Ireland is known as the 'Emerald Isle' due to its lush green landscapes."
-            },
-            {
-                name: "New Zealand",
-                flag: "https://flagcdn.com/w320/nz.png",
-                capital: "Wellington",
-                continent: "Oceania",
-                population: "5 million",
-                fact: "New Zealand was the first country to give women the right to vote."
-            },
-            {
-                name: "Finland",
-                flag: "https://flagcdn.com/w320/fi.png",
-                capital: "Helsinki",
-                continent: "Europe",
-                population: "5.5 million",
-                fact: "Finland is known as the 'Land of a Thousand Lakes', but actually has 188,000 lakes."
-            },
-            {
-                name: "Denmark",
-                flag: "https://flagcdn.com/w320/dk.png",
-                capital: "Copenhagen",
-                continent: "Europe",
-                population: "5.8 million",
-                fact: "Denmark is home to the oldest flag in the world, the 'Dannebrog', dating back to 1219."
-            },
-            {
-                name: "Portugal",
-                flag: "https://flagcdn.com/w320/pt.png",
-                capital: "Lisbon",
-                continent: "Europe",
-                population: "10 million",
-                fact: "Portugal is the oldest nation-state in Europe."
-            },
-            {
-                name: "Greece",
-                flag: "https://flagcdn.com/w320/gr.png",
-                capital: "Athens",
-                continent: "Europe",
-                population: "10.4 million",
-                fact: "Greece is considered the birthplace of democracy and the Olympic Games."
-            },
-            {
-                name: "Turkey",
-                flag: "https://flagcdn.com/w320/tr.png",
-                capital: "Ankara",
-                continent: "Asia/Europe",
-                population: "84 million",
-                fact: "Istanbul, Turkey, is the only city in the world located on two continents."
-            },
-            {
-                name: "Saudi Arabia",
-                flag: "https://flagcdn.com/w320/sa.png",
-                capital: "Riyadh",
-                continent: "Asia",
-                population: "35 million",
-                fact: "Saudi Arabia is the only country with no rivers."
-            },
-            {
-                name: "United Arab Emirates",
-                flag: "https://flagcdn.com/w320/ae.png",
-                capital: "Abu Dhabi",
-                continent: "Asia",
-                population: "9.9 million",
-                fact: "The UAE is home to the Burj Khalifa, the world's tallest building."
-            },
-            {
-                name: "Israel",
-                flag: "https://flagcdn.com/w320/il.png",
-                capital: "Jerusalem",
-                continent: "Asia",
-                population: "9.3 million",
-                fact: "Israel has the highest number of museums per capita in the world."
-            },
-            {
-                name: "Nigeria",
-                flag: "https://flagcdn.com/w320/ng.png",
-                capital: "Abuja",
-                continent: "Africa",
-                population: "211 million",
-                fact: "Nigeria is the most populous country in Africa."
-            },
-            {
-                name: "Kenya",
-                flag: "https://flagcdn.com/w320/ke.png",
-                capital: "Nairobi",
-                continent: "Africa",
-                population: "53 million",
-                fact: "Kenya is famous for its wildlife safaris and the Great Migration."
-            },
-            {
-                name: "Morocco",
-                flag: "https://flagcdn.com/w320/ma.png",
-                capital: "Rabat",
-                continent: "Africa",
-                population: "37 million",
-                fact: "Morocco is the only African country that is not a member of the African Union."
-            },
-            {
-                name: "Indonesia",
-                flag: "https://flagcdn.com/w320/id.png",
-                capital: "Jakarta",
-                continent: "Asia",
-                population: "276 million",
-                fact: "Indonesia is the world's largest island country, with over 17,000 islands."
-            },
-            {
-                name: "Thailand",
-                flag: "https://flagcdn.com/w320/th.png",
-                capital: "Bangkok",
-                continent: "Asia",
-                population: "70 million",
-                fact: "Thailand is the only Southeast Asian country that has never been colonized by a European power."
-            },
-            {
-                name: "Vietnam",
-                flag: "https://flagcdn.com/w320/vn.png",
-                capital: "Hanoi",
-                continent: "Asia",
-                population: "97 million",
-                fact: "Vietnam is the world's largest exporter of cashew nuts and black pepper."
-            },
-            {
-                name: "Philippines",
-                flag: "https://flagcdn.com/w320/ph.png",
-                capital: "Manila",
-                continent: "Asia",
-                population: "111 million",
-                fact: "The Philippines is the only country in the world whose flag can be flown upside down to indicate a state of war."
-            },
-            {
-                name: "Malaysia",
-                flag: "https://flagcdn.com/w320/my.png",
-                capital: "Kuala Lumpur",
-                continent: "Asia",
-                population: "32 million",
-                fact: "Malaysia is home to the Petronas Twin Towers, once the tallest buildings in the world."
-            },
-            {
-                name: "Singapore",
-                flag: "https://flagcdn.com/w320/sg.png",
-                capital: "Singapore",
-                continent: "Asia",
-                population: "5.7 million",
-                fact: "Singapore is one of only three surviving city-states in the world."
-            },
-            {
-                name: "Colombia",
-                flag: "https://flagcdn.com/w320/co.png",
-                capital: "Bogotá",
-                continent: "South America",
-                population: "51 million",
-                fact: "Colombia is the second most biodiverse country in the world."
-            },
-            {
-                name: "Chile",
-                flag: "https://flagcdn.com/w320/cl.png",
-                capital: "Santiago",
-                continent: "South America",
-                population: "19 million",
-                fact: "Chile is the longest north-south country in the world, stretching over 4,300 km."
-            },
-            {
-                name: "Peru",
-                flag: "https://flagcdn.com/w320/pe.png",
-                capital: "Lima",
-                continent: "South America",
-                population: "33 million",
-                fact: "Peru is home to Machu Picchu, an ancient Inca city."
-            },
-            {
-                name: "Venezuela",
-                flag: "https://flagcdn.com/w320/ve.png",
-                capital: "Caracas",
-                continent: "South America",
-                population: "28 million",
-                fact: "Venezuela has the world's highest waterfall, Angel Falls."
-            },
-            {
-                name: "Poland",
-                flag: "https://flagcdn.com/w320/pl.png",
-                capital: "Warsaw",
-                continent: "Europe",
-                population: "38 million",
-                fact: "Poland is the largest country in Eastern Europe."
-            },
-            {
-                name: "Ukraine",
-                flag: "https://flagcdn.com/w320/ua.png",
-                capital: "Kyiv",
-                continent: "Europe",
-                population: "41 million",
-                fact: "Ukraine is the second-largest country in Europe by area."
-            },
-            {
-                name: "Czech Republic",
-                flag: "https://flagcdn.com/w320/cz.png",
-                capital: "Prague",
-                continent: "Europe",
-                population: "10.7 million",
-                fact: "The Czech Republic has the highest beer consumption per capita in the world."
-            },
-            {
-                name: "Hungary",
-                flag: "https://flagcdn.com/w320/hu.png",
-                capital: "Budapest",
-                continent: "Europe",
-                population: "9.7 million",
-                fact: "Hungary is known for its thermal baths, with over 1,000 natural hot springs."
-            },
-            {
-                name: "Romania",
-                flag: "https://flagcdn.com/w320/ro.png",
-                capital: "Bucharest",
-                continent: "Europe",
-                population: "19 million",
-                fact: "Romania is home to the largest building in Europe, the Palace of the Parliament."
-            },
-            {
-                name: "Algeria",
-                flag: "https://flagcdn.com/w320/dz.png",
-                capital: "Algiers",
-                continent: "Africa",
-                population: "44 million",
-                fact: "Algeria is the largest country in Africa by land area."
-            },
-            {
-                name: "Ethiopia",
-                flag: "https://flagcdn.com/w320/et.png",
-                capital: "Addis Ababa",
-                continent: "Africa",
-                population: "115 million",
-                fact: "Ethiopia is the only African country that was never colonized."
-            },
-            {
-                name: "Egypt",
-                flag: "https://flagcdn.com/w320/eg.png",
-                capital: "Cairo",
-                continent: "Africa/Asia",
-                population: "102 million",
-                fact: "The Great Pyramid of Giza was the tallest man-made structure for over 3,800 years."
-            }
-        ];
-
-        
+    const countries = [
+        {name: "Andorra", flag: "https://flagcdn.com/w320/ad.png"},
+        {name: "United Arab Emirates", flag: "https://flagcdn.com/w320/ae.png"},
+        {name: "Afghanistan", flag: "https://flagcdn.com/w320/af.png"},
+        {name: "Antigua and Barbuda", flag: "https://flagcdn.com/w320/ag.png"},
+        {name: "Anguilla", flag: "https://flagcdn.com/w320/ai.png"},
+        {name: "Albania", flag: "https://flagcdn.com/w320/al.png"},
+        {name: "Armenia", flag: "https://flagcdn.com/w320/am.png"},
+        {name: "Angola", flag: "https://flagcdn.com/w320/ao.png"},
+        {name: "Antarctica", flag: "https://flagcdn.com/w320/aq.png"},
+        {name: "Argentina", flag: "https://flagcdn.com/w320/ar.png"},
+        {name: "American Samoa", flag: "https://flagcdn.com/w320/as.png"},
+        {name: "Austria", flag: "https://flagcdn.com/w320/at.png"},
+        {name: "Australia", flag: "https://flagcdn.com/w320/au.png"},
+        {name: "Aruba", flag: "https://flagcdn.com/w320/aw.png"},
+        {name: "Åland Islands", flag: "https://flagcdn.com/w320/ax.png"},
+        {name: "Azerbaijan", flag: "https://flagcdn.com/w320/az.png"},
+        {name: "Bosnia and Herzegovina", flag: "https://flagcdn.com/w320/ba.png"},
+        {name: "Barbados", flag: "https://flagcdn.com/w320/bb.png"},
+        {name: "Bangladesh", flag: "https://flagcdn.com/w320/bd.png"},
+        {name: "Belgium", flag: "https://flagcdn.com/w320/be.png"},
+        {name: "Burkina Faso", flag: "https://flagcdn.com/w320/bf.png"},
+        {name: "Bulgaria", flag: "https://flagcdn.com/w320/bg.png"},
+        {name: "Bahrain", flag: "https://flagcdn.com/w320/bh.png"},
+        {name: "Burundi", flag: "https://flagcdn.com/w320/bi.png"},
+        {name: "Benin", flag: "https://flagcdn.com/w320/bj.png"},
+        {name: "Saint Barthélemy", flag: "https://flagcdn.com/w320/bl.png"},
+        {name: "Bermuda", flag: "https://flagcdn.com/w320/bm.png"},
+        {name: "Brunei Darussalam", flag: "https://flagcdn.com/w320/bn.png"},
+        {name: "Bolivia", flag: "https://flagcdn.com/w320/bo.png"},
+        {name: "Bonaire, Sint Eustatius and Saba", flag: "https://flagcdn.com/w320/bq.png"},
+        {name: "Brazil", flag: "https://flagcdn.com/w320/br.png"},
+        {name: "Bahamas", flag: "https://flagcdn.com/w320/bs.png"},
+        {name: "Bhutan", flag: "https://flagcdn.com/w320/bt.png"},
+        {name: "Bouvet Island", flag: "https://flagcdn.com/w320/bv.png"},
+        {name: "Botswana", flag: "https://flagcdn.com/w320/bw.png"},
+        {name: "Belarus", flag: "https://flagcdn.com/w320/by.png"},
+        {name: "Belize", flag: "https://flagcdn.com/w320/bz.png"},
+        {name: "Canada", flag: "https://flagcdn.com/w320/ca.png"},
+        {name: "Cocos (Keeling) Islands", flag: "https://flagcdn.com/w320/cc.png"},
+        {name: "Congo, The Democratic Republic Of The", flag: "https://flagcdn.com/w320/cd.png"},
+        {name: "Central African Republic", flag: "https://flagcdn.com/w320/cf.png"},
+        {name: "Congo", flag: "https://flagcdn.com/w320/cg.png"},
+        {name: "Switzerland", flag: "https://flagcdn.com/w320/ch.png"},
+        {name: "Côte D'Ivoire", flag: "https://flagcdn.com/w320/ci.png"},
+        {name: "Cook Islands", flag: "https://flagcdn.com/w320/ck.png"},
+        {name: "Chile", flag: "https://flagcdn.com/w320/cl.png"},
+        {name: "Cameroon", flag: "https://flagcdn.com/w320/cm.png"},
+        {name: "China", flag: "https://flagcdn.com/w320/cn.png"},
+        {name: "Colombia", flag: "https://flagcdn.com/w320/co.png"},
+        {name: "Costa Rica", flag: "https://flagcdn.com/w320/cr.png"},
+        {name: "Cuba", flag: "https://flagcdn.com/w320/cu.png"},
+        {name: "Cape Verde", flag: "https://flagcdn.com/w320/cv.png"},
+        {name: "Curaçao", flag: "https://flagcdn.com/w320/cw.png"},
+        {name: "Christmas Island", flag: "https://flagcdn.com/w320/cx.png"},
+        {name: "Cyprus", flag: "https://flagcdn.com/w320/cy.png"},
+        {name: "Czech Republic", flag: "https://flagcdn.com/w320/cz.png"},
+        {name: "Germany", flag: "https://flagcdn.com/w320/de.png"},
+        {name: "Djibouti", flag: "https://flagcdn.com/w320/dj.png"},
+        {name: "Denmark", flag: "https://flagcdn.com/w320/dk.png"},
+        {name: "Dominica", flag: "https://flagcdn.com/w320/dm.png"},
+        {name: "Dominican Republic", flag: "https://flagcdn.com/w320/do.png"},
+        {name: "Algeria", flag: "https://flagcdn.com/w320/dz.png"},
+        {name: "Ecuador", flag: "https://flagcdn.com/w320/ec.png"},
+        {name: "Estonia", flag: "https://flagcdn.com/w320/ee.png"},
+        {name: "Egypt", flag: "https://flagcdn.com/w320/eg.png"},
+        {name: "Western Sahara", flag: "https://flagcdn.com/w320/eh.png"},
+        {name: "Eritrea", flag: "https://flagcdn.com/w320/er.png"},
+        {name: "Spain", flag: "https://flagcdn.com/w320/es.png"},
+        {name: "Ethiopia", flag: "https://flagcdn.com/w320/et.png"},
+        {name: "European Union", flag: "https://flagcdn.com/w320/eu.png"},
+        {name: "Finland", flag: "https://flagcdn.com/w320/fi.png"},
+        {name: "Fiji", flag: "https://flagcdn.com/w320/fj.png"},
+        {name: "Falkland Islands (Malvinas)", flag: "https://flagcdn.com/w320/fk.png"},
+        {name: "Micronesia, Federated States Of", flag: "https://flagcdn.com/w320/fm.png"},
+        {name: "Faroe Islands", flag: "https://flagcdn.com/w320/fo.png"},
+        {name: "France", flag: "https://flagcdn.com/w320/fr.png"},
+        {name: "Gabon", flag: "https://flagcdn.com/w320/ga.png"},
+        {name: "United Kingdom", flag: "https://flagcdn.com/w320/gb.png"},
+        {name: "Grenada", flag: "https://flagcdn.com/w320/gd.png"},
+        {name: "Georgia", flag: "https://flagcdn.com/w320/ge.png"},
+        {name: "French Guiana", flag: "https://flagcdn.com/w320/gf.png"},
+        {name: "Guernsey", flag: "https://flagcdn.com/w320/gg.png"},
+        {name: "Ghana", flag: "https://flagcdn.com/w320/gh.png"},
+        {name: "Gibraltar", flag: "https://flagcdn.com/w320/gi.png"},
+        {name: "Greenland", flag: "https://flagcdn.com/w320/gl.png"},
+        {name: "Gambia", flag: "https://flagcdn.com/w320/gm.png"},
+        {name: "Guinea", flag: "https://flagcdn.com/w320/gn.png"},
+        {name: "Guadeloupe", flag: "https://flagcdn.com/w320/gp.png"},
+        {name: "Equatorial Guinea", flag: "https://flagcdn.com/w320/gq.png"},
+        {name: "Greece", flag: "https://flagcdn.com/w320/gr.png"},
+        {name: "South Georgia and the South Sandwich Islands", flag: "https://flagcdn.com/w320/gs.png"},
+        {name: "Guatemala", flag: "https://flagcdn.com/w320/gt.png"},
+        {name: "Guam", flag: "https://flagcdn.com/w320/gu.png"},
+        {name: "Guinea-Bissau", flag: "https://flagcdn.com/w320/gw.png"},
+        {name: "Guyana", flag: "https://flagcdn.com/w320/gy.png"},
+        {name: "Hong Kong", flag: "https://flagcdn.com/w320/hk.png"},
+        {name: "Heard and McDonald Islands", flag: "https://flagcdn.com/w320/hm.png"},
+        {name: "Honduras", flag: "https://flagcdn.com/w320/hn.png"},
+        {name: "Croatia", flag: "https://flagcdn.com/w320/hr.png"},
+        {name: "Haiti", flag: "https://flagcdn.com/w320/ht.png"},
+        {name: "Hungary", flag: "https://flagcdn.com/w320/hu.png"},
+        {name: "Indonesia", flag: "https://flagcdn.com/w320/id.png"},
+        {name: "Ireland", flag: "https://flagcdn.com/w320/ie.png"},
+        {name: "Israel", flag: "https://flagcdn.com/w320/il.png"},
+        {name: "Isle of Man", flag: "https://flagcdn.com/w320/im.png"},
+        {name: "India", flag: "https://flagcdn.com/w320/in.png"},
+        {name: "British Indian Ocean Territory", flag: "https://flagcdn.com/w320/io.png"},
+        {name: "Iraq", flag: "https://flagcdn.com/w320/iq.png"},
+        {name: "Iran, Islamic Republic Of", flag: "https://flagcdn.com/w320/ir.png"},
+        {name: "Iceland", flag: "https://flagcdn.com/w320/is.png"},
+        {name: "Italy", flag: "https://flagcdn.com/w320/it.png"},
+        {name: "Jersey", flag: "https://flagcdn.com/w320/je.png"},
+        {name: "Jamaica", flag: "https://flagcdn.com/w320/jm.png"},
+        {name: "Jordan", flag: "https://flagcdn.com/w320/jo.png"},
+        {name: "Japan", flag: "https://flagcdn.com/w320/jp.png"},
+        {name: "Kenya", flag: "https://flagcdn.com/w320/ke.png"},
+        {name: "Kyrgyzstan", flag: "https://flagcdn.com/w320/kg.png"},
+        {name: "Cambodia", flag: "https://flagcdn.com/w320/kh.png"},
+        {name: "Kiribati", flag: "https://flagcdn.com/w320/ki.png"},
+        {name: "Comoros", flag: "https://flagcdn.com/w320/km.png"},
+        {name: "Saint Kitts And Nevis", flag: "https://flagcdn.com/w320/kn.png"},
+        {name: "Korea, Democratic People's Republic Of", flag: "https://flagcdn.com/w320/kp.png"},
+        {name: "Korea, Republic of", flag: "https://flagcdn.com/w320/kr.png"},
+        {name: "Kuwait", flag: "https://flagcdn.com/w320/kw.png"},
+        {name: "Cayman Islands", flag: "https://flagcdn.com/w320/ky.png"},
+        {name: "Kazakhstan", flag: "https://flagcdn.com/w320/kz.png"},
+        {name: "Lao People's Democratic Republic", flag: "https://flagcdn.com/w320/la.png"},
+        {name: "Lebanon", flag: "https://flagcdn.com/w320/lb.png"},
+        {name: "Saint Lucia", flag: "https://flagcdn.com/w320/lc.png"},
+        {name: "Liechtenstein", flag: "https://flagcdn.com/w320/li.png"},
+        {name: "Sri Lanka", flag: "https://flagcdn.com/w320/lk.png"},
+        {name: "Liberia", flag: "https://flagcdn.com/w320/lr.png"},
+        {name: "Lesotho", flag: "https://flagcdn.com/w320/ls.png"},
+        {name: "Lithuania", flag: "https://flagcdn.com/w320/lt.png"},
+        {name: "Luxembourg", flag: "https://flagcdn.com/w320/lu.png"},
+        {name: "Latvia", flag: "https://flagcdn.com/w320/lv.png"},
+        {name: "Libya", flag: "https://flagcdn.com/w320/ly.png"},
+        {name: "Morocco", flag: "https://flagcdn.com/w320/ma.png"},
+        {name: "Monaco", flag: "https://flagcdn.com/w320/mc.png"},
+        {name: "Moldova, Republic of", flag: "https://flagcdn.com/w320/md.png"},
+        {name: "Montenegro", flag: "https://flagcdn.com/w320/me.png"},
+        {name: "Saint Martin", flag: "https://flagcdn.com/w320/mf.png"},
+        {name: "Madagascar", flag: "https://flagcdn.com/w320/mg.png"},
+        {name: "Marshall Islands", flag: "https://flagcdn.com/w320/mh.png"},
+        {name: "Macedonia, the Former Yugoslav Republic Of", flag: "https://flagcdn.com/w320/mk.png"},
+        {name: "Mali", flag: "https://flagcdn.com/w320/ml.png"},
+        {name: "Myanmar", flag: "https://flagcdn.com/w320/mm.png"},
+        {name: "Mongolia", flag: "https://flagcdn.com/w320/mn.png"},
+        {name: "Macao", flag: "https://flagcdn.com/w320/mo.png"},
+        {name: "Northern Mariana Islands", flag: "https://flagcdn.com/w320/mp.png"},
+        {name: "Martinique", flag: "https://flagcdn.com/w320/mq.png"},
+        {name: "Mauritania", flag: "https://flagcdn.com/w320/mr.png"},
+        {name: "Montserrat", flag: "https://flagcdn.com/w320/ms.png"},
+        {name: "Malta", flag: "https://flagcdn.com/w320/mt.png"},
+        {name: "Mauritius", flag: "https://flagcdn.com/w320/mu.png"},
+        {name: "Maldives", flag: "https://flagcdn.com/w320/mv.png"},
+        {name: "Malawi", flag: "https://flagcdn.com/w320/mw.png"},
+        {name: "Mexico", flag: "https://flagcdn.com/w320/mx.png"},
+        {name: "Malaysia", flag: "https://flagcdn.com/w320/my.png"},
+        {name: "Mozambique", flag: "https://flagcdn.com/w320/mz.png"},
+        {name: "Namibia", flag: "https://flagcdn.com/w320/na.png"},
+        {name: "New Caledonia", flag: "https://flagcdn.com/w320/nc.png"},
+        {name: "Niger", flag: "https://flagcdn.com/w320/ne.png"},
+        {name: "Norfolk Island", flag: "https://flagcdn.com/w320/nf.png"},
+        {name: "Nigeria", flag: "https://flagcdn.com/w320/ng.png"},
+        {name: "Nicaragua", flag: "https://flagcdn.com/w320/ni.png"},
+        {name: "Netherlands", flag: "https://flagcdn.com/w320/nl.png"},
+        {name: "Norway", flag: "https://flagcdn.com/w320/no.png"},
+        {name: "Nepal", flag: "https://flagcdn.com/w320/np.png"},
+        {name: "Nauru", flag: "https://flagcdn.com/w320/nr.png"},
+        {name: "Niue", flag: "https://flagcdn.com/w320/nu.png"},
+        {name: "New Zealand", flag: "https://flagcdn.com/w320/nz.png"},
+        {name: "Oman", flag: "https://flagcdn.com/w320/om.png"},
+        {name: "Panama", flag: "https://flagcdn.com/w320/pa.png"},
+        {name: "Peru", flag: "https://flagcdn.com/w320/pe.png"},
+        {name: "French Polynesia", flag: "https://flagcdn.com/w320/pf.png"},
+        {name: "Papua New Guinea", flag: "https://flagcdn.com/w320/pg.png"},
+        {name: "Philippines", flag: "https://flagcdn.com/w320/ph.png"},
+        {name: "Pakistan", flag: "https://flagcdn.com/w320/pk.png"},
+        {name: "Poland", flag: "https://flagcdn.com/w320/pl.png"},
+        {name: "Saint Pierre And Miquelon", flag: "https://flagcdn.com/w320/pm.png"},
+        {name: "Pitcairn", flag: "https://flagcdn.com/w320/pn.png"},
+        {name: "Puerto Rico", flag: "https://flagcdn.com/w320/pr.png"},
+        {name: "Palestine, State of", flag: "https://flagcdn.com/w320/ps.png"},
+        {name: "Portugal", flag: "https://flagcdn.com/w320/pt.png"},
+        {name: "Palau", flag: "https://flagcdn.com/w320/pw.png"},
+        {name: "Paraguay", flag: "https://flagcdn.com/w320/py.png"},
+        {name: "Qatar", flag: "https://flagcdn.com/w320/qa.png"},
+        {name: "Réunion", flag: "https://flagcdn.com/w320/re.png"},
+        {name: "Romania", flag: "https://flagcdn.com/w320/ro.png"},
+        {name: "Serbia", flag: "https://flagcdn.com/w320/rs.png"},
+        {name: "Russian Federation", flag: "https://flagcdn.com/w320/ru.png"},
+        {name: "Rwanda", flag: "https://flagcdn.com/w320/rw.png"},
+        {name: "Saudi Arabia", flag: "https://flagcdn.com/w320/sa.png"},
+        {name: "Solomon Islands", flag: "https://flagcdn.com/w320/sb.png"},
+        {name: "Seychelles", flag: "https://flagcdn.com/w320/sc.png"},
+        {name: "Sudan", flag: "https://flagcdn.com/w320/sd.png"},
+        {name: "Sweden", flag: "https://flagcdn.com/w320/se.png"},
+        {name: "Singapore", flag: "https://flagcdn.com/w320/sg.png"},
+        {name: "Saint Helena", flag: "https://flagcdn.com/w320/sh.png"},
+        {name: "Slovenia", flag: "https://flagcdn.com/w320/si.png"},
+        {name: "Svalbard And Jan Mayen", flag: "https://flagcdn.com/w320/sj.png"},
+        {name: "Slovakia", flag: "https://flagcdn.com/w320/sk.png"},
+        {name: "Sierra Leone", flag: "https://flagcdn.com/w320/sl.png"},
+        {name: "San Marino", flag: "https://flagcdn.com/w320/sm.png"},
+        {name: "Senegal", flag: "https://flagcdn.com/w320/sn.png"},
+        {name: "Somalia", flag: "https://flagcdn.com/w320/so.png"},
+        {name: "Suriname", flag: "https://flagcdn.com/w320/sr.png"},
+        {name: "South Sudan", flag: "https://flagcdn.com/w320/ss.png"},
+        {name: "Sao Tome and Principe", flag: "https://flagcdn.com/w320/st.png"},
+        {name: "El Salvador", flag: "https://flagcdn.com/w320/sv.png"},
+        {name: "Sint Maarten", flag: "https://flagcdn.com/w320/sx.png"},
+        {name: "Syrian Arab Republic", flag: "https://flagcdn.com/w320/sy.png"},
+        {name: "Swaziland", flag: "https://flagcdn.com/w320/sz.png"},
+        {name: "Turks and Caicos Islands", flag: "https://flagcdn.com/w320/tc.png"},
+        {name: "Chad", flag: "https://flagcdn.com/w320/td.png"},
+        {name: "French Southern Territories", flag: "https://flagcdn.com/w320/tf.png"},
+        {name: "Togo", flag: "https://flagcdn.com/w320/tg.png"},
+        {name: "Thailand", flag: "https://flagcdn.com/w320/th.png"},
+        {name: "Tajikistan", flag: "https://flagcdn.com/w320/tj.png"},
+        {name: "Tokelau", flag: "https://flagcdn.com/w320/tk.png"},
+        {name: "Timor-Leste", flag: "https://flagcdn.com/w320/tl.png"},
+        {name: "Turkmenistan", flag: "https://flagcdn.com/w320/tm.png"},
+        {name: "Tunisia", flag: "https://flagcdn.com/w320/tn.png"},
+        {name: "Tonga", flag: "https://flagcdn.com/w320/to.png"},
+        {name: "Turkey", flag: "https://flagcdn.com/w320/tr.png"},
+        {name: "Trinidad and Tobago", flag: "https://flagcdn.com/w320/tt.png"},
+        {name: "Tuvalu", flag: "https://flagcdn.com/w320/tv.png"},
+        {name: "Taiwan, Republic Of China", flag: "https://flagcdn.com/w320/tw.png"},
+        {name: "Tanzania, United Republic of", flag: "https://flagcdn.com/w320/tz.png"},
+        {name: "Ukraine", flag: "https://flagcdn.com/w320/ua.png"},
+        {name: "Uganda", flag: "https://flagcdn.com/w320/ug.png"},
+        {name: "United States Minor Outlying Islands", flag: "https://flagcdn.com/w320/um.png"},
+        {name: "United States", flag: "https://flagcdn.com/w320/us.png"},
+        {name: "Uruguay", flag: "https://flagcdn.com/w320/uy.png"},
+        {name: "Uzbekistan", flag: "https://flagcdn.com/w320/uz.png"},
+        {name: "Holy See (Vatican City State)", flag: "https://flagcdn.com/w320/va.png"},
+        {name: "Saint Vincent And The Grenadines", flag: "https://flagcdn.com/w320/vc.png"},
+        {name: "Venezuela, Bolivarian Republic of", flag: "https://flagcdn.com/w320/ve.png"},
+        {name: "Virgin Islands, British", flag: "https://flagcdn.com/w320/vg.png"},
+        {name: "Virgin Islands, U.S.", flag: "https://flagcdn.com/w320/vi.png"},
+        {name: "Vietnam", flag: "https://flagcdn.com/w320/vn.png"},
+        {name: "Vanuatu", flag: "https://flagcdn.com/w320/vu.png"},
+        {name: "Wallis and Futuna", flag: "https://flagcdn.com/w320/wf.png"},
+        {name: "Samoa", flag: "https://flagcdn.com/w320/ws.png"},
+        {name: "Kosovo", flag: "https://flagcdn.com/w320/xk.png"},
+        {name: "Yemen", flag: "https://flagcdn.com/w320/ye.png"},
+        {name: "Mayotte", flag: "https://flagcdn.com/w320/yt.png"},
+        {name: "South Africa", flag: "https://flagcdn.com/w320/za.png"},
+        {name: "Zambia", flag: "https://flagcdn.com/w320/zm.png"},
+        {name: "Zimbabwe", flag: "https://flagcdn.com/w320/zw.png"}
+    ];
         let shuffledCountries = [];
         let currentQuestionIndex = 0;
         let score = 0;
         let correctAnswerCountry = '';
-        let currentMode = ''; 
+        let currentMode = '';
         let streak = 0;
         let maxStreak = 0;
         let correctAnswersCount = 0;
         let wrongAnswersCount = 0;
         let timerInterval;
         const TOTAL_CLASSIC_QUESTIONS = 10;
-        const TIMED_MODE_DURATION = 60; 
+        const TIMED_MODE_DURATION = 60;
+        const CLASSIC_MODE_NEXT_QUESTION_DELAY = 800; // 0.8 seconds
+        const TIMED_MODE_NEXT_QUESTION_DELAY = 100; // 0.1 seconds (almost instant)
 
-        
         const themeToggle = document.getElementById('theme-toggle');
         const body = document.body;
 
         const modeSelectionScreen = document.getElementById('mode-selection');
         const classicModeBtn = document.getElementById('classic-mode');
         const timedModeBtn = document.getElementById('timed-mode');
-        const learnModeBtn = document.getElementById('learn-mode');
         const highScoresBtn = document.getElementById('high-scores');
 
         const gameScreen = document.getElementById('game-screen');
@@ -791,18 +583,12 @@
         const timerSpan = document.getElementById('timer');
         const flagImage = document.getElementById('flag-image');
         const answerButtons = document.querySelectorAll('.answer-btn');
-        
-        const learnInfo = document.getElementById('learn-info');
-        const correctCountrySpan = document.getElementById('correct-country');
-        const countryCapitalSpan = document.getElementById('country-capital');
-        const countryContinentSpan = document.getElementById('country-continent');
-        const countryPopulationSpan = document.getElementById('country-population');
-        const countryFactSpan = document.getElementById('country-fact');
-        
-        const explainFlagBtn = document.getElementById('explain-flag-btn');
-        const symbolismLoadingSpinner = document.getElementById('symbolism-loading-spinner');
-        const flagSymbolismOutput = document.getElementById('flag-symbolism-output');
 
+        // Removed elements for Flag Symbolism
+        // const correctCountrySpan = document.getElementById('correct-country');
+        // const explainFlagBtn = document.getElementById('explain-flag-btn');
+        // const symbolismLoadingSpinner = document.getElementById('symbolism-loading-spinner');
+        // const flagSymbolismOutput = document.getElementById('flag-symbolism-output');
 
         const resultsScreen = document.getElementById('results-screen');
         const finalScoreSpan = document.getElementById('final-score');
@@ -815,15 +601,14 @@
         const highScoresScreen = document.getElementById('high-scores-screen');
         const highScoresList = document.getElementById('high-scores-list');
         const backToMenuBtn = document.getElementById('back-to-menu');
-        const homeLink = document.getElementById('home-link'); 
+        const homeLink = document.getElementById('home-link');
 
-        
         const correctSound = document.getElementById('correct-sound');
         const wrongSound = document.getElementById('wrong-sound');
         const streakSound = document.getElementById('streak-sound');
         const timeUpSound = document.getElementById('time-up-sound');
 
-        
+
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -836,8 +621,15 @@
             const availableItems = sourceArray.filter(item => !excludeItems.includes(item));
 
             if (availableItems.length < count) {
-                console.error("Not enough unique items available to pick from.");
-                return [];
+                console.error("Not enough unique items available to pick from. Consider adding more countries or reducing quiz options.");
+                // Fallback: If not enough unique items, just return what's available or duplicate if necessary (not ideal for quiz but prevents crash)
+                if (availableItems.length > 0) {
+                     while (uniqueItems.size < count) {
+                        const randomIndex = Math.floor(Math.random() * availableItems.length);
+                        uniqueItems.add(availableItems[randomIndex]);
+                    }
+                }
+                 return Array.from(uniqueItems);
             }
 
             while (uniqueItems.size < count) {
@@ -848,10 +640,10 @@
         }
 
         function playSound(audioElement) {
-            audioElement.currentTime = 0; 
+            audioElement.currentTime = 0;
             audioElement.play().catch(e => console.log("Audio play failed:", e));
         }
-//ok
+
         function showScreen(screenId) {
             const screens = [modeSelectionScreen, gameScreen, resultsScreen, highScoresScreen];
             screens.forEach(screen => {
@@ -864,16 +656,15 @@
         }
 
         function resetGameAndUI() {
-            clearInterval(timerInterval); 
+            clearInterval(timerInterval);
             score = 0;
             currentQuestionIndex = 0;
             streak = 0;
             maxStreak = 0;
             correctAnswersCount = 0;
             wrongAnswersCount = 0;
-            shuffledCountries = []; 
+            shuffledCountries = [];
 
-            
             scoreSpan.textContent = 0;
             streakSpan.textContent = 0;
             questionNumberSpan.textContent = 0;
@@ -892,32 +683,31 @@
                 button.disabled = false;
             });
 
-            learnInfo.classList.add('hidden');
-            flagSymbolismOutput.classList.add('hidden');
-            flagSymbolismOutput.innerHTML = '';
-            explainFlagBtn.disabled = false;
+            // Removed flag symbolism UI reset
+            // flagSymbolismOutput.classList.add('hidden');
+            // flagSymbolismOutput.innerHTML = '';
+            // explainFlagBtn.disabled = false;
 
             streakContainer.classList.add('hidden');
             timerContainer.classList.add('hidden');
         }
 
-        
+
         function initializeGame(mode) {
-            resetGameAndUI(); 
+            resetGameAndUI();
             currentMode = mode;
             shuffledCountries = [...countries];
             shuffleArray(shuffledCountries);
 
             questionNumberSpan.textContent = currentQuestionIndex + 1;
 
-            
             if (currentMode === 'timed') {
                 timerContainer.classList.remove('hidden');
-                totalQuestionsSpan.textContent = '∞'; 
+                totalQuestionsSpan.textContent = '∞'; // Infinite questions for timed mode
                 startTimer();
-            } else if (currentMode === 'classic' || currentMode === 'learn') {
+            } else if (currentMode === 'classic') {
                 totalQuestionsSpan.textContent = TOTAL_CLASSIC_QUESTIONS;
-                streakContainer.classList.remove('hidden'); 
+                streakContainer.classList.remove('hidden');
             }
 
             showScreen('game-screen');
@@ -925,71 +715,86 @@
         }
 
         function loadQuestion() {
-            
-            if ((currentMode === 'classic' || currentMode === 'learn') && currentQuestionIndex >= TOTAL_CLASSIC_QUESTIONS) {
+            if ((currentMode === 'classic') && currentQuestionIndex >= TOTAL_CLASSIC_QUESTIONS) {
                 endGame();
                 return;
             }
 
-            
+            // Ensure we don't run out of flags, especially for timed mode
+            if (currentQuestionIndex >= shuffledCountries.length) {
+                // If we've exhausted all flags, reshuffle and continue for timed mode
+                if (currentMode === 'timed') {
+                    shuffledCountries = [...countries];
+                    shuffleArray(shuffledCountries);
+                    currentQuestionIndex = 0; // Reset index to start from the beginning of the reshuffled list
+                } else {
+                    // For classic mode, if somehow we run out of flags before TOTAL_CLASSIC_QUESTIONS, end the game.
+                    endGame();
+                    return;
+                }
+            }
+
             const currentCountryData = shuffledCountries[currentQuestionIndex];
             correctAnswerCountry = currentCountryData.name;
 
-            
             flagImage.src = currentCountryData.flag;
             flagImage.alt = `Flag of ${currentCountryData.name}`;
-            flagImage.classList.remove('glowing-border-correct', 'glowing-border-wrong'); 
+            flagImage.classList.remove('glowing-border-correct', 'glowing-border-wrong');
 
-            
+            // Removed correctCountrySpan update
+
             const allCountryNames = countries.map(c => c.name);
+            // Ensure the correct answer is excluded when picking wrong options
             const wrongOptions = getRandomUniqueItems(allCountryNames, 3, [correctAnswerCountry]);
             let options = [correctAnswerCountry, ...wrongOptions];
             shuffleArray(options);
 
-            
             answerButtons.forEach((button, index) => {
                 button.textContent = options[index];
-                button.classList.remove('correct', 'wrong'); 
-                button.classList.add('from-blue-500', 'to-blue-700', 'hover:from-blue-600', 'hover:to-blue-800'); 
-                button.disabled = false; 
+                button.classList.remove('correct', 'wrong');
+                button.classList.add('from-blue-500', 'to-blue-700', 'hover:from-blue-600', 'hover:to-blue-800');
+                button.disabled = false;
             });
 
-            learnInfo.classList.add('hidden'); 
-            flagSymbolismOutput.classList.add('hidden'); 
-            flagSymbolismOutput.innerHTML = ''; 
-            explainFlagBtn.disabled = false; 
+            // Removed flag symbolism UI state reset
+            // flagSymbolismOutput.classList.add('hidden');
+            // flagSymbolismOutput.innerHTML = '';
+            // explainFlagBtn.disabled = false;
 
-            questionNumberSpan.textContent = currentQuestionIndex + 1; 
+            if (currentMode === 'classic') {
+                questionNumberSpan.textContent = currentQuestionIndex + 1;
+            }
+            // For timed mode, question number isn't explicitly tracked this way.
         }
 
         function handleAnswer(selectedButton) {
-            
             answerButtons.forEach(button => {
-                button.disabled = true;
-                button.classList.remove('hover:from-blue-600', 'hover:to-blue-800'); 
+                button.disabled = true; // Disable all buttons after an answer is chosen
+                button.classList.remove('hover:from-blue-600', 'hover:to-blue-800');
             });
 
             const selectedAnswer = selectedButton.textContent;
+            const delay = currentMode === 'timed' ? TIMED_MODE_NEXT_QUESTION_DELAY : CLASSIC_MODE_NEXT_QUESTION_DELAY;
 
             if (selectedAnswer === correctAnswerCountry) {
-                score += 10; 
+                score += 10;
                 scoreSpan.textContent = score;
                 streak++;
                 correctAnswersCount++;
                 playSound(correctSound);
-                selectedButton.classList.add('correct'); 
-                flagImage.classList.add('glowing-border-correct'); 
-                if (streak > 0 && streak % 3 === 0) { 
+                selectedButton.classList.add('correct');
+                flagImage.classList.add('glowing-border-correct');
+                if (streak > 0 && streak % 3 === 0) {
                     playSound(streakSound);
                 }
             } else {
-                streak = 0; 
+                streak = 0; // Reset streak on wrong answer
                 wrongAnswersCount++;
                 playSound(wrongSound);
-                selectedButton.classList.add('wrong'); 
-                flagImage.classList.add('glowing-border-wrong'); 
+                selectedButton.classList.add('wrong');
+                flagImage.classList.add('glowing-border-wrong');
 
-                
+                // Highlight the correct answer even if the user chose wrong
                 answerButtons.forEach(button => {
                     if (button.textContent === correctAnswerCountry) {
                         button.classList.add('correct');
@@ -997,76 +802,15 @@
                 });
             }
             streakSpan.textContent = streak;
-            maxStreak = Math.max(maxStreak, streak); 
+            maxStreak = Math.max(maxStreak, streak); // Update max streak
 
-            if (currentMode === 'learn') {
-                displayLearnInfo();
-            }
-
-            
             setTimeout(() => {
                 currentQuestionIndex++;
                 loadQuestion();
-            }, 1500); 
+            }, delay); // Use dynamic delay based on mode
         }
 
-        function displayLearnInfo() {
-            const country = countries.find(c => c.name === correctAnswerCountry);
-            if (country) {
-                correctCountrySpan.textContent = country.name;
-                countryCapitalSpan.textContent = country.capital;
-                countryContinentSpan.textContent = country.continent;
-                countryPopulationSpan.textContent = country.population;
-                countryFactSpan.textContent = country.fact;
-                learnInfo.classList.remove('hidden');
-            }
-        }
-
-        
-        async function explainFlagSymbolism() {
-            explainFlagBtn.disabled = true; 
-            symbolismLoadingSpinner.classList.remove('hidden'); 
-            flagSymbolismOutput.classList.add('hidden'); 
-            flagSymbolismOutput.innerHTML = ''; 
-
-            const prompt = `Explain the symbolism and meaning behind the colors and symbols on the flag of ${correctAnswerCountry}. Keep the explanation concise, about 2-3 paragraphs.`;
-
-            let chatHistory = [];
-            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-
-            const payload = { contents: chatHistory };
-            const apiKey = ""; 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                const result = await response.json();
-
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const text = result.candidates[0].content.parts[0].text;
-                    flagSymbolismOutput.innerHTML = `<p>${text.replace(/\n\n/g, '</p><p>')}</p>`; 
-                    flagSymbolismOutput.classList.remove('hidden');
-                } else {
-                    flagSymbolismOutput.innerHTML = '<p class="text-red-500">Could not generate explanation. Please try again.</p>';
-                    flagSymbolismOutput.classList.remove('hidden');
-                    console.error("Gemini API response structure unexpected:", result);
-                }
-            } catch (error) {
-                flagSymbolismOutput.innerHTML = '<p class="text-red-500">Error fetching explanation. Please check your network connection.</p>';
-                flagSymbolismOutput.classList.remove('hidden');
-                console.error("Error calling Gemini API:", error);
-            } finally {
-                symbolismLoadingSpinner.classList.add('hidden'); 
-                explainFlagBtn.disabled = false; 
-            }
-        }
+        // Removed explainFlagSymbolism function as the feature is removed
 
         function startTimer() {
             let timeLeft = TIMED_MODE_DURATION;
@@ -1075,7 +819,7 @@
                 timeLeft--;
                 timerSpan.textContent = timeLeft;
                 if (timeLeft <= 10) {
-                    timerSpan.classList.add('text-red-500', 'pulse'); 
+                    timerSpan.classList.add('text-red-500', 'pulse');
                 } else {
                     timerSpan.classList.remove('text-red-500', 'pulse');
                 }
@@ -1089,7 +833,7 @@
         }
 
         function endGame() {
-            clearInterval(timerInterval); 
+            clearInterval(timerInterval);
             showScreen('results-screen');
 
             finalScoreSpan.textContent = score;
@@ -1104,7 +848,7 @@
             saveHighScore(currentMode, score);
         }
 
-        
+
         function saveHighScore(mode, newScore) {
             let highScores = JSON.parse(localStorage.getItem('flagQuizHighScores')) || {};
             if (!highScores[mode] || newScore > highScores[mode]) {
@@ -1116,19 +860,17 @@
         function displayHighScores() {
             showScreen('high-scores-screen');
             const highScores = JSON.parse(localStorage.getItem('flagQuizHighScores')) || {};
-            highScoresList.innerHTML = ''; 
+            highScoresList.innerHTML = '';
 
             const modes = {
                 'classic': 'Classic Mode',
                 'timed': 'Timed Mode',
-                'learn': 'Learn Mode'
             };
 
             for (const modeKey in modes) {
                 const scoreValue = highScores[modeKey] !== undefined ? highScores[modeKey] : 'N/A';
                 const scoreColor = modeKey === 'classic' ? 'text-indigo-600 dark:text-indigo-300' :
-                                   modeKey === 'timed' ? 'text-amber-600 dark:text-amber-300' :
-                                   'text-emerald-600 dark:text-emerald-300';
+                                   modeKey === 'timed' ? 'text-amber-600 dark:text-amber-300' : '';
 
                 const listItem = `
                     <div class="flex justify-between items-center py-2 px-3 rounded-md bg-gray-50 dark:bg-gray-800 shadow-sm">
@@ -1140,10 +882,9 @@
             }
         }
 
-        
+        // Event Listeners
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('dark');
-            
             if (body.classList.contains('dark')) {
                 localStorage.setItem('theme', 'dark');
             } else {
@@ -1151,39 +892,35 @@
             }
         });
 
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('theme') === 'dark') {
-                body.classList.add('dark');
-            } else {
-                body.classList.remove('dark'); 
-            }
-        });
-
         classicModeBtn.addEventListener('click', () => initializeGame('classic'));
         timedModeBtn.addEventListener('click', () => initializeGame('timed'));
-        learnModeBtn.addEventListener('click', () => initializeGame('learn'));
         highScoresBtn.addEventListener('click', displayHighScores);
+        playAgainBtn.addEventListener('click', () => initializeGame(currentMode)); // Re-initialize with current mode
+        backToMenuBtn.addEventListener('click', () => {
+            resetGameAndUI(); // Ensure game state is clean before going to menu
+            showScreen('mode-selection');
+        });
+        homeLink.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default link behavior
+            resetGameAndUI();
+            showScreen('mode-selection');
+        });
+
 
         answerButtons.forEach(button => {
             button.addEventListener('click', () => handleAnswer(button));
         });
 
-        playAgainBtn.addEventListener('click', () => showScreen('mode-selection'));
-        backToMenuBtn.addEventListener('click', () => showScreen('mode-selection'));
+        // Removed explainFlagBtn listener
 
-        
-        homeLink.addEventListener('click', (event) => {
-            event.preventDefault(); 
-            resetGameAndUI(); 
-            showScreen('mode-selection'); 
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('theme') === 'dark') {
+                body.classList.add('dark');
+            } else {
+                body.classList.remove('dark'); // Ensure 'dark' class is removed if theme is light
+            }
+            showScreen('mode-selection'); // Start on the mode selection screen
         });
-
-        
-        explainFlagBtn.addEventListener('click', explainFlagSymbolism);
-
-        
-        showScreen('mode-selection');
     </script>
 </body>
 </html>
