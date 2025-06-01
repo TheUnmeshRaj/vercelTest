@@ -250,6 +250,7 @@ const countries = [
     {name: "Mayotte", flag: "https://flagcdn.com/w320/yt.png"}
 ];
 // Country ranges by continent
+// Country ranges by continent
 const asia_range = range(0, 50);
 const africa_range = range(50, 106);
 const europe_range = range(106, 150);
@@ -274,6 +275,7 @@ function range(start, end) {
 // Game state variables
 let selectedContinents = [];
 let customQuestionCount = 10;
+let customModeType = 'classic'; // 'classic' or 'timed'
 let shuffledCountries = [];
 let currentQuestionIndex = 0;
 let score = 0;
@@ -297,6 +299,8 @@ let highScoresBtn, gameScreen, questionNumberSpan, totalQuestionsSpan, scoreSpan
 let streakContainer, streakSpan, timerContainer, timerSpan, flagImage, answerButtons;
 let resultsScreen, finalScoreSpan, correctAnswersSpan, wrongAnswersSpan, accuracySpan;
 let maxStreakSpan, playAgainBtn, highScoresScreen, highScoresList, backToMenuBtn, homeLink;
+let customModeScreen, continentCheckboxes, questionCountInput, customModeTypeRadios;
+let startCustomGameBtn, backFromCustomBtn;
 
 // Initialize DOM elements
 function initializeDOMElements() {
@@ -328,6 +332,14 @@ function initializeDOMElements() {
     highScoresList = document.getElementById('high-scores-list');
     backToMenuBtn = document.getElementById('back-to-menu');
     homeLink = document.getElementById('home-link');
+    
+    // Custom mode elements
+    customModeScreen = document.getElementById('custom-mode-screen');
+    continentCheckboxes = document.querySelectorAll('input[name="continent"]');
+    questionCountInput = document.getElementById('question-count');
+    customModeTypeRadios = document.querySelectorAll('input[name="custom-mode-type"]');
+    startCustomGameBtn = document.getElementById('start-custom-game');
+    backFromCustomBtn = document.getElementById('back-from-custom');
 }
 
 // Utility functions
@@ -380,7 +392,7 @@ function getCountriesByContinents(continents) {
 
 // Screen management
 function showScreen(screenId) {
-    const screens = [modeSelectionScreen, gameScreen, resultsScreen, highScoresScreen];
+    const screens = [modeSelectionScreen, gameScreen, resultsScreen, highScoresScreen, customModeScreen];
     screens.forEach(screen => {
         if (screen && screen.id === screenId) {
             screen.classList.remove('hidden');
@@ -426,18 +438,27 @@ function resetGameAndUI() {
     if (timerContainer) timerContainer.classList.add('hidden');
 }
 
-function initializeGame(mode, customContinents = [], customCount = 10) {
+function initializeGame(mode, customContinents = [], customCount = 10, customType = 'classic') {
     resetGameAndUI();
     currentMode = mode;
 
     if (mode === 'custom') {
         selectedContinents = customContinents;
         customQuestionCount = customCount;
+        customModeType = customType;
+        
         const customCountries = getCountriesByContinents(selectedContinents);
         shuffleArray(customCountries);
         shuffledCountries = customCountries.slice(0, customQuestionCount);
-        if (totalQuestionsSpan) totalQuestionsSpan.textContent = customQuestionCount;
-        if (streakContainer) streakContainer.classList.remove('hidden');
+        
+        if (customType === 'timed') {
+            if (timerContainer) timerContainer.classList.remove('hidden');
+            if (totalQuestionsSpan) totalQuestionsSpan.textContent = '∞';
+            startTimer();
+        } else {
+            if (totalQuestionsSpan) totalQuestionsSpan.textContent = customQuestionCount;
+            if (streakContainer) streakContainer.classList.remove('hidden');
+        }
     } else {
         // Make sure countries array exists
         if (typeof countries === 'undefined') {
@@ -464,22 +485,38 @@ function initializeGame(mode, customContinents = [], customCount = 10) {
 }
 
 function loadQuestion() {
-    const totalQuestions = currentMode === 'custom' ? customQuestionCount : TOTAL_CLASSIC_QUESTIONS;
+    // Determine total questions based on mode and type
+    let totalQuestions;
+    if (currentMode === 'custom') {
+        totalQuestions = customModeType === 'timed' ? Infinity : customQuestionCount;
+    } else {
+        totalQuestions = currentMode === 'classic' ? TOTAL_CLASSIC_QUESTIONS : Infinity;
+    }
 
-    if ((currentMode === 'classic' || currentMode === 'custom') && currentQuestionIndex >= totalQuestions) {
+    // Check if game should end (for non-timed modes)
+    if (((currentMode === 'classic') || (currentMode === 'custom' && customModeType === 'classic')) 
+        && currentQuestionIndex >= totalQuestions) {
         endGame();
         return;
     }
 
+    // Handle running out of questions
     if (currentQuestionIndex >= shuffledCountries.length) {
-        if (currentMode === 'timed') {
-            if (typeof countries === 'undefined') {
-                console.error('Countries array is not defined');
-                endGame();
-                return;
+        if (currentMode === 'timed' || (currentMode === 'custom' && customModeType === 'timed')) {
+            // For timed modes, reshuffle and continue
+            if (currentMode === 'custom') {
+                const customCountries = getCountriesByContinents(selectedContinents);
+                shuffleArray(customCountries);
+                shuffledCountries = customCountries;
+            } else {
+                if (typeof countries === 'undefined') {
+                    console.error('Countries array is not defined');
+                    endGame();
+                    return;
+                }
+                shuffledCountries = [...countries];
+                shuffleArray(shuffledCountries);
             }
-            shuffledCountries = [...countries];
-            shuffleArray(shuffledCountries);
             currentQuestionIndex = 0;
         } else {
             endGame();
@@ -502,12 +539,19 @@ function loadQuestion() {
         flagImage.classList.remove('glowing-border-correct', 'glowing-border-wrong');
     }
 
-    if (typeof countries === 'undefined') {
-        console.error('Countries array is not defined');
-        return;
+    // Get wrong options from appropriate pool
+    let allCountryNames;
+    if (currentMode === 'custom') {
+        const customCountries = getCountriesByContinents(selectedContinents);
+        allCountryNames = customCountries.map(c => c.name);
+    } else {
+        if (typeof countries === 'undefined') {
+            console.error('Countries array is not defined');
+            return;
+        }
+        allCountryNames = countries.map(c => c.name);
     }
     
-    const allCountryNames = countries.map(c => c.name);
     const wrongOptions = getRandomUniqueItems(allCountryNames, 3, [correctAnswerCountry]);
     let options = [correctAnswerCountry, ...wrongOptions];
     shuffleArray(options);
@@ -533,7 +577,14 @@ function handleAnswer(selectedButton) {
     });
     
     const selectedAnswer = selectedButton.textContent;
-    const delay = currentMode === 'timed' ? TIMED_MODE_NEXT_QUESTION_DELAY : CLASSIC_MODE_NEXT_QUESTION_DELAY;
+    
+    // Determine delay based on mode type
+    let delay;
+    if (currentMode === 'timed' || (currentMode === 'custom' && customModeType === 'timed')) {
+        delay = TIMED_MODE_NEXT_QUESTION_DELAY;
+    } else {
+        delay = CLASSIC_MODE_NEXT_QUESTION_DELAY;
+    }
     
     if (selectedAnswer === correctAnswerCountry) {
         score += 10;
@@ -605,8 +656,15 @@ function endGame() {
 function saveHighScore(mode, newScore) {
     try {
         let highScores = JSON.parse(localStorage.getItem('flagQuizHighScores')) || {};
-        if (!highScores[mode] || newScore > highScores[mode]) {
-            highScores[mode] = newScore;
+        
+        // Create separate categories for custom mode types
+        let scoreKey = mode;
+        if (mode === 'custom') {
+            scoreKey = `custom-${customModeType}`;
+        }
+        
+        if (!highScores[scoreKey] || newScore > highScores[scoreKey]) {
+            highScores[scoreKey] = newScore;
             localStorage.setItem('flagQuizHighScores', JSON.stringify(highScores));
         }
     } catch (error) {
@@ -626,7 +684,8 @@ function displayHighScores() {
         const modes = {
             'classic': 'Classic Mode',
             'timed': 'Timed Mode',
-            'custom': 'Custom Mode'
+            'custom-classic': 'Custom Classic Mode',
+            'custom-timed': 'Custom Timed Mode'
         };
         
         for (const modeKey in modes) {
@@ -637,8 +696,10 @@ function displayHighScores() {
                 scoreColor = 'text-indigo-600 dark:text-indigo-300';
             } else if (modeKey === 'timed') {
                 scoreColor = 'text-amber-600 dark:text-amber-300';
-            } else if (modeKey === 'custom') {
+            } else if (modeKey === 'custom-classic') {
                 scoreColor = 'text-green-600 dark:text-green-300';
+            } else if (modeKey === 'custom-timed') {
+                scoreColor = 'text-purple-600 dark:text-purple-300';
             }
             
             const listItem = `
@@ -657,6 +718,28 @@ function displayHighScores() {
 function getSelectedContinentsFromUI() {
     const checkboxes = document.querySelectorAll('input[name="continent"]:checked');
     return Array.from(checkboxes).map(checkbox => checkbox.value);
+}
+
+function getSelectedCustomModeType() {
+    const selectedRadio = document.querySelector('input[name="custom-mode-type"]:checked');
+    return selectedRadio ? selectedRadio.value : 'classic';
+}
+
+function validateCustomModeSelections() {
+    const selectedContinents = getSelectedContinentsFromUI();
+    const questionCount = parseInt(questionCountInput?.value, 10) || 10;
+    
+    if (selectedContinents.length === 0) {
+        alert('Please select at least one continent.');
+        return false;
+    }
+    
+    if (questionCount < 1 || questionCount > 100) {
+        alert('Please enter a valid number of questions (1-100).');
+        return false;
+    }
+    
+    return true;
 }
 
 // Event listeners setup
@@ -679,6 +762,74 @@ function setupEventListeners() {
     }
     
     if (classicModeBtn) {
+        classicModeBtn.addEventListener('click', () => initializeGame('classic'));
+    }
+    
+    if (timedModeBtn) {
+        timedModeBtn.addEventListener('click', () => initializeGame('timed'));
+    }
+    
+    if (customModeBtn) {
+        customModeBtn.addEventListener('click', () => {
+            showScreen('custom-mode-screen');
+        });
+    }
+    
+    if (startCustomGameBtn) {
+        startCustomGameBtn.addEventListener('click', () => {
+            if (!validateCustomModeSelections()) {
+                return;
+            }
+            
+            const selectedContinents = getSelectedContinentsFromUI();
+            const questionCount = parseInt(questionCountInput?.value, 10) || 10;
+            const modeType = getSelectedCustomModeType();
+
+            initializeGame('custom', selectedContinents, questionCount, modeType);
+        });
+    }
+    
+    if (backFromCustomBtn) {
+        backFromCustomBtn.addEventListener('click', () => {
+            showScreen('mode-selection');
+        });
+    }
+    
+    if (highScoresBtn) {
+        highScoresBtn.addEventListener('click', displayHighScores);
+    }
+    
+    if (playAgainBtn) {
+        playAgainBtn.addEventListener('click', () => {
+            if (currentMode === 'custom') {
+                initializeGame(currentMode, selectedContinents, customQuestionCount, customModeType);
+            } else {
+                initializeGame(currentMode);
+            }
+        });
+    }
+    
+    if (backToMenuBtn) {
+        backToMenuBtn.addEventListener('click', () => {
+            resetGameAndUI();
+            showScreen('mode-selection');
+        });
+    }
+    
+    if (homeLink) {
+        homeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            resetGameAndUI();
+            showScreen('mode-selection');
+        });
+    }
+    
+    if (answerButtons) {
+        answerButtons.forEach(button => {
+            button.addEventListener('click', () => handleAnswer(button));
+        });
+    }
+}Btn) {
         classicModeBtn.addEventListener('click', () => initializeGame('classic'));
     }
     

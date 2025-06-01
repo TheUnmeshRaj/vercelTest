@@ -70,6 +70,8 @@ body.dark {
 
 #timed-mode { background-image: linear-gradient(135deg, #f59e0b, #fbbf24); }
 
+#custom-mode { background-image: linear-gradient(135deg, #72cf69, #4ab857); }
+
 #high-scores { background-image: linear-gradient(135deg, #c084fc, #d8b4fe); }
 
 #play-again { background-image: linear-gradient(135deg, #fbbf24, #fde68a); }
